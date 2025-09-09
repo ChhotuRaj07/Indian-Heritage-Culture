@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Photography Portfolio</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid">
+      <img src="bg-removebg-preview.png" class="d-block" alt="Urban" width="4%">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Discover</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Game</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div id="portfolioCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://live.staticflickr.com/4260/34727605794_089bce22bd_b.jpg" class="d-block w-100" alt="Nature">
+        <div class="carousel-caption">
+          <h5>Majestic Mountains</h5>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images3.alphacoders.com/853/thumb-1920-853174.jpg" class="d-block w-100" alt="Urban">
+        <div class="carousel-caption">
+          <h5>The Iconic Taj Mahal</h5>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://i.pinimg.com/originals/2d/d8/b6/2dd8b6568448deee8be7dff005697a4f.jpg" class="d-block w-100" alt="Portraits">
+        <div class="carousel-caption">
+          <h5>Spiritual Varanasi</h5>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://www.10wallpaper.com/wallpaper/1366x768/2201/Jaipur_Nahargarh_Rajasthan_India_2021_Bing_4K_Photo_1366x768.jpg" class="d-block w-100" alt="Wildlife">
+        <div class="carousel-caption">
+          <h5>Historic Red Fort</h5>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://i.pinimg.com/originals/d0/cd/58/d0cd58dd4fcfaa1e4cf6c6dfdb1ab0b2.jpg" class="d-block w-100" alt="Fashion">
+        <div class="carousel-caption">
+          <h5>Temples of Tamil Nadu</h5>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- Intro Section -->
+  <div class="intro-section text-center">
+    <h1 class="fw-bold display-5" style="text-transform: uppercase; white-space: nowrap;" id="text1">Discover the Soul of Our Heritage</h1>
+    <p class="lead" style="color: #000000; font-weight: 400;">
+      Every culture tells a story, every tradition carries a legacy. 
+      Explore the vibrant tapestry <br> of history, art, and timeless traditions 
+      mapped across sacred lands,<br> ancient sites, and living communities.
+    </p>
+  </div>
+
+  <!-- Heritage & Culture Section -->
+  <section class="heritage-section container py-5">
+    <div class="text-center mb-5">
+      <h2 class="roots-heading" id="text1">Roots & Rituals</h2>
+      <p class="section-subtitle">Unfolding the legacy, pride, and spirit of our civilization.</p>
+    </div>
+    <div class="row g-4 align-items-center">
+      <div class="col-md-6">
+        <video class="heritage-video" autoplay muted playsinline loop controls>
+          <source src="Culture.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <div class="col-md-6 text-center">
+        <h3 class="fw-bold mb-4">Stories of Our Past</h3>
+        <p>
+          From majestic forts and palaces to serene temples and vibrant festivals, our heritage is a living museum of history.
+          Through my lens, I bring these monuments and traditions to life — preserving their essence for generations to come.
+        </p>
+        <p>
+          Each photograph tells a story: of artisans, kings, and everyday people who built and celebrated this culture.
+        </p>
+        <a href="gallery.html" class="btn btn-outline-light mt-2">View Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="heritage-culture">
+    <div class="container">
+      <h2>Heritage & Culture</h2>
+      <div class="heritage-row">
+        <div class="heritage-box">
+          <p>“Explore India’s rich cultural diversity and timeless traditions passed down for generations.”</p>
+          <h6>— Ancient Temples</h6>
+        </div>
+        <div class="heritage-box">
+          <p>“Marvel at architectural wonders and vibrant festivals that bring history to life.”</p>
+          <h6>— Cultural Festivals</h6>
+        </div>
+        <div class="heritage-box">
+          <p>“Experience the fusion of art, music, and rituals reflecting the soul of India.”</p>
+          <h6>— Local Art & Crafts</h6>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="my-5">
+
+  <div id="cardsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="row g-4">
+          <div class="col-md-4 text-center">
+            <img src="https://thumbs.dreamstime.com/b/group-classical-odissi-dancers-performing-odissi-dance-stage-konark-temple-odisha-india-odissi-dance-also-known-as-155047464.jpg?w=768" class="heritage-img" alt="Festival" width="20%">
+            <h5 class="mt-3 fw-bold mb-3 vibrant-heading" style="color: black;">Vibrant Festivals</h5>
+          </div>
+          <div class="col-md-4 text-center">
+            <img src="https://thumbs.dreamstime.com/b/man-selling-traditional-sweets-happy-villager-local-market-rural-area-pakistan-people-background-surfing-passing-109270170.jpg?w=768" class="heritage-img" alt="Traditional Food" width="20%">
+            <h5 class="mt-3 fw-bold mb-3 vibrant-heading" style="color: black;">Traditional Food</h5>
+          </div>
+          <div class="col-md-4 text-center">
+            <img src="https://thumbs.dreamstime.com/b/decorated-indian-elephant-front-buland-darwaza-fatehpur-sikri-agra-india-sunset-april-medieval-giant-stone-gateway-made-180928514.jpg?w=768" class="heritage-img" alt="Legacy" width="20%">
+            <h5 class="mt-3 fw-bold mb-3 vibrant-heading" style="color: black;">Legacy</h5>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="row g-4">
+          <div class="col-md-4 text-center">
+            <img src="https://images.unsplash.com/photo-1549890762-0a3f8933bcf6?w=768&auto=format&fit=crop&q=60" class="heritage-img" alt="Sacred Temples" width="20%">
+            <h5 class="mt-3 fw-bold mb-3 vibrant-heading" style="color: black;">Sacred Temples</h5>
+          </div>
+          <div class="col-md-4 text-center">
+            <img src="https://images.unsplash.com/photo-1605976405912-9f1f2d6f1a3e?w=768&auto=format&fit=crop&q=60" class="heritage-img" alt="Folk Arts" width="20%">
+            <h5 class="mt-3 fw-bold mb-3 vibrant-heading" style="color: black;">Folk Arts</h5>
+          </div>
+          <div class="col-md-4 text-center">
+            <img src="https://images.unsplash.com/photo-1599661046289-98f3052d6089?w=768&auto=format&fit=crop&q=60" class="heritage-img" alt="Historic Forts" width="20%">
+            <h5 class="mt-3 fw-bold mb-3 vibrant-heading" style="color: black;">Historic Forts</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#cardsCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#cardsCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <section id="heritage-showcase" class="container py-5">
+    <h2 class="text-center fw-bold mb-3">Discover India's Heritage</h2>
+    <p class="text-center text-muted mb-5">
+      Explore iconic landmarks and hidden gems of India's rich heritage and diverse cultures.
+    </p>
+    <div class="row g-4">
+      <div class="col-md-8 position-relative heritage-item">
+        <img src="https://thumbs.dreamstime.com/b/new-delhi-delhi-india-february-people-tourists-visiting-humayun-s-tomb-famous-place-tomb-mughal-emperor-mirza-nasir-al-din-331798898.jpg?w=992" 
+             class="img-fluid rounded shadow" alt="Heritage Site 1">
+        <div class="heritage-caption">
+          <h5>Humayun's Tomb</h5>
+          <p>New Delhi, Delhi, India.</p>
+        </div>
+      </div>
+      <div class="col-md-4 position-relative heritage-item">
+        <img src="https://i.pinimg.com/originals/ff/02/f7/ff02f7b52bf0d1a5dba1519d60bf6423.jpg" 
+             class="img-fluid rounded shadow" alt="Heritage Site 2">
+        <div class="heritage-caption">
+          <h5>Mughal architecture</h5>
+          <p>inspired Mughal aesthetics.</p>
+        </div>
+      </div>
+      <div class="col-md-4 position-relative heritage-item">
+        <img src="https://plus.unsplash.com/premium_photo-1661963720399-b0d05bee9005?w=600&auto=format&fit=crop&q=60" 
+             class="img-fluid rounded shadow" alt="Heritage Site 3">
+        <div class="heritage-caption">
+          <h5>Ajanta Caves</h5>
+          <p>Ancient Buddhist rock-cut caves</p>
+        </div>
+      </div>
+      <div class="col-md-8 position-relative heritage-item">
+        <img src="https://plus.unsplash.com/premium_photo-1733259783041-279db9015860?w=600&auto=format&fit=crop&q=60" 
+             class="img-fluid rounded shadow" alt="Heritage Site 4">
+        <div class="heritage-caption">
+          <h5>Amer Fort</h5>
+          <p>Majestic fort in Jaipur</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a href="heritage-gallery.html" class="btn btn-outline-primary rounded-pill px-4">
+        View Full Gallery
+      </a>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="py-5 text-center" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('path-to-sandstone-texture.jpg'); background-size: cover;">
+    <div class="container">
+      <h2 class="fw-bold mb-5 text-light" style="font-family: 'Cinzel', serif; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);">Stories in Frames</h2>
+      <div class="masonry-grid">
+        <div class="masonry-item">
+          <div class="p-4 bg-dark text-light rounded shadow frame" style="border: 3px solid #e8b923;">
+            <img src="https://www.rajasthandriver.com/img/travel-info/667x445_festivals-rajasthan-dhulandi.jpg" alt="Rajasthan festival photo by RV" class="img-fluid mb-3 testimonial-img" style="max-height: 150px; object-fit: cover;">
+            <p style="font-family: 'Lora', serif; font-style: italic;">
+              “RV’s lens wove the colors of Holi in Jaipur into a masterpiece. Our family’s joy lives forever in these frames.”
+            </p>
+            <h6 class="fw-bold mt-3 text-warning">— Priya Sharma</h6>
+          </div>
+        </div>
+        <div class="masonry-item">
+          <div class="p-4 bg-dark text-light rounded shadow frame" style="border: 3px solid #e8b923;">
+            <img src="https://www.myeventz.co.in/public/uploads/venue/Chomu%20Palace%20Hotel%20(3).jpg" alt="Varanasi wedding photo by RV" class="img-fluid mb-3 testimonial-img" style="max-height: 150px; object-fit: cover;">
+            <p style="font-family: 'Lora', serif; font-style: italic;">
+              “Our wedding on the ghats of Varanasi was immortalized by Ayyan, artistry. Each photo tells our love story.”
+            </p>
+            <h6 class="fw-bold mt-3 text-warning">— Aarav & Meera</h6>
+          </div>
+        </div>
+        <div class="masonry-item">
+          <div class="p-4 bg-dark text-light rounded shadow frame" style="border: 3px solid #e8b923;">
+            <img src="https://th.bing.com/th/id/R.8910e4b8f507630ba5d9698db1c247e5?rik=Q9yVI7R2BOUCeg&riu=http%3a%2f%2fbalilovelyvillas.weebly.com%2fuploads%2f5%2f8%2f2%2f8%2f58287151%2fprambanan1_orig.jpg&ehk=mYMhEQEjMfIJQlLG2yBMfhn7RbAaij9KUDkm7Jjxj6Y%3d&risl=&pid=ImgRaw&r=0" alt="Temple landscape by RV" class="img-fluid mb-3 testimonial-img" style="max-height: 150px; object-fit: cover;">
+            <p style="font-family: 'Lora', serif; font-style: italic;">
+              “Anshu captured the serenity of Khajuraho’s temples with unmatched creativity. A true visionary.”
+            </p>
+            <h6 class="fw-bold mt-3 text-warning">— Rohit Verma</h6>
+          </div>
+        </div>
+        <div class="masonry-item">
+          <div class="p-4 bg-dark text-light rounded shadow frame" style="border: 3px solid #e8b923;">
+            <img src="https://lh3.googleusercontent.com/-oqadIx9NqOU/Vo-AoM7fmKI/AAAAAAABKcM/7Lc0G7v-BmE/mysore-palace-5%25255B6%25255D.jpg?imgmax=800" alt="Mysore Palace by RV" class="img-fluid mb-3" style="max-height: 150px; object-fit: cover;">
+            <p style="font-family: 'Lora', serif; font-style: italic;">
+              “Rohan photos of Mysore’s Dussehra brought the palace’s grandeur to life, a true celebration of heritage.”
+            </p>
+            <h6 class="fw-bold mt-3 text-warning">— Kavita Reddy</h6>
+          </div>
+        </div>
+      </div>
+      <div class="container text-center">
+        <div class="d-flex justify-content-center align-items-center mt-5">
+          <a href="/portfolio" class="btn custom-btn">Discover More Stories</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-5" style="background-color: #4a2c0b;">
+    <div class="container">
+      <div class="row text-center text-md-start">
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h4 class="fw-bold">Heritage Hub </h4>
+          <p class="mb-1">&copy; 2025 Heritage Hub by Script Squad.</p>
+          <p class="mb-0">All Rights Reserved to Script Squad . <a href="privacy.html" class="text-white text-decoration-underline">Privacy Policy</a></p>
+        </div>
+        <div class="col-md-4 mb-4 mb-md-0">
+          <h4 class="fw-bold">Useful Links</h4>
+          <ul class="list-unstyled">
+            <li><a href="map.html" class="text-white">Discover</a></li>
+            <li><a href="game.html" class="text-white">Game</a></li>
+            <li><a href="about.html" class="text-white">About Us</a></li>
+            <li><a href="contactus.html" class="text-white">Connect</a></li>
+          </ul>
+        </div>
+        <div class="col-md-4 text-md-start text-center">
+          <h4 class="fw-bold">Follow Our Journey</h4>
+          <div class="d-flex justify-content-md-start justify-content-center gap-3 mt-2 social-icons">
+            <a href="#" aria-label="Facebook" class="text-white"><i class="bi bi-facebook fs-4"></i></a>
+            <a href="#" aria-label="Instagram" class="text-white"><i class="bi bi-instagram fs-4"></i></a>
+            <a href="#" aria-label="Twitter" class="text-white"><i class="bi bi-twitter fs-4"></i></a>
+            <a href="#" aria-label="Pinterest" class="text-white"><i class="bi bi-pinterest fs-4"></i></a>
+          </div>
+          <p class="mt-3 fst-italic">"Preserving the past, inspiring the future."</p>
+        </div>
+      </div>
+      <div class="row mt-4 text-center">
+        <div class="col-12">
+          <h5 class="fw-bold">Join Us at SIH 2025</h5>
+          <p>Explore innovative solutions for heritage preservation. <a href="sih-event.html" class="btn btn-outline-light btn-sm">Learn More</a></p>
+          <form class="d-flex justify-content-center gap-2 mt-2">
+            <input type="email" class="form-control w-50" placeholder="Subscribe to updates" aria-label="Email">
+            <button type="submit" class="btn btn-light">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chatbot -->
+  <div id="chatbot-icon" class="floating-icon">
+    <span>💬</span>
+  </div>
+  <div id="chatbot-window" class="chatbot-container">
+    <div class="chatbot-header">
+      <h3>Chat with us!</h3>
+      <span class="close-btn">&times;</span>
+    </div>
+    <div class="chatbot-body">
+      <p style="text-align: center; color: #888; margin-top: 20px;">
+        Hello! How can I help you today?
+      </p>
+    </div>
+    <div class="chatbot-footer">
+      <input type="text" placeholder="Type a message..." />
+      <button>Send</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const chatbotIcon = document.getElementById("chatbot-icon");
+      const chatbotWindow = document.getElementById("chatbot-window");
+      const closeBtn = document.querySelector(".close-btn");
+      
+      chatbotIcon.addEventListener("click", (e) => {
+        e.preventDefault();
+        chatbotWindow.style.display = "flex";
+        chatbotIcon.style.display = "none";
+      });
+      
+      closeBtn.addEventListener("click", () => {
+        chatbotWindow.style.display = "none";
+        chatbotIcon.style.display = "flex";
+      });
+    });
+  </script>
+</body>
+</html>

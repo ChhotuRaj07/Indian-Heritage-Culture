@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇮🇳 Indian Heritage Quest - Cultural Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Kalam:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Light aesthetic theme */
+        .light-theme {
+            background: #f7f9fc;
+            color: #1f2937;
+        }
+
+        .kalam {
+            font-family: 'Kalam', cursive;
+        }
+
+        .indian-gradient {
+            background: linear-gradient(135deg, #ff9933, #ffffff, #138808);
+            background-size: 300% 300%;
+            animation: indianFlag 6s ease-in-out infinite;
+        }
+
+        @keyframes indianFlag {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .heritage-bg {
+            background: #f7f9fc;
+            background-size: auto;
+            animation: none;
+        }
+
+        @keyframes heritageShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* .cultural-glow {
+            text-shadow: 0 0 20px #ff9933, 0 0 40px #ff9933;
+            animation: culturalPulse 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes culturalPulse {
+            from { text-shadow: 0 0 20px #ff9933, 0 0 40px #ff9933; }
+            to { text-shadow: 0 0 30px #ff9933, 0 0 60px #ff9933, 0 0 80px #138808; }
+        } */
+
+        .heritage-card {
+            background: #ffffff;
+            border: 1px solid #e6ebf1;
+            transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            animation: float 4s ease-in-out infinite;
+            box-shadow: 0 10px 24px rgba(23, 26, 31, 0.06);
+        }
+
+        .heritage-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            /* box-shadow: 0 25px 50px rgba(255,153,51,0.4); */
+            /* border-color: #ff9933; */
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        .indian-button {
+            background: linear-gradient(45deg, #e6f0ff, #f3e8ff, #e8fff3);
+            background-size: 200% 200%;
+            animation: indianColors 6s ease infinite;
+            transition: all 0.25s ease;
+            color: #1f2937 !important;
+            border: 1px solid #dbe4f0;
+            box-shadow: 0 6px 16px rgba(23, 26, 31, 0.08);
+        }
+
+        .indian-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(23, 26, 31, 0.12);
+            filter: saturate(1.05);
+        }
+
+        @keyframes indianColors {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Light theme overrides for text and buttons inside cards */
+        .light-theme .heritage-card .text-white { color: #1f2937 !important; }
+        .light-theme .heritage-card .text-gray-300 { color: #4b5563 !important; }
+        .light-theme .heritage-card .text-orange-300,
+        .light-theme .heritage-card .text-yellow-300,
+        .light-theme .heritage-card .text-blue-300,
+        .light-theme .heritage-card .text-pink-300,
+        .light-theme .heritage-card .text-green-300,
+        .light-theme .heritage-card .text-purple-300 { filter: saturate(1.1) brightness(0.9); }
+
+        .light-theme .heritage-card button { 
+            background: #f4f7fb !important; 
+            color: #1f2937 !important; 
+            border-color: #d8e3ef !important; 
+        }
+        .light-theme .heritage-card button:hover { 
+            background: #e9f1fb !important; 
+            box-shadow: 0 6px 16px rgba(23,26,31,0.08);
+        }
+
+        /* Make previously light (cream/orange) text more visible in light theme */
+        .light-theme .text-orange-100, .light-theme .text-orange-200, .light-theme .text-orange-300 { color: #9a3412 !important; }
+        .light-theme .text-yellow-300, .light-theme .text-yellow-200 { color: #92400e !important; }
+        .light-theme .text-pink-300 { color: #9d174d !important; }
+        .light-theme .text-blue-300 { color: #1e3a8a !important; }
+        .light-theme .text-green-300 { color: #166534 !important; }
+        .light-theme .text-purple-300 { color: #6b21a8 !important; }
+        .light-theme .text-orange-400 { color: #b45309 !important; }
+        .light-theme .text-yellow-400 { color: #b45309 !important; }
+        .light-theme .text-blue-400 { color: #1d4ed8 !important; }
+        .light-theme .text-green-400 { color: #15803d !important; }
+        .light-theme .text-pink-400 { color: #be185d !important; }
+        .light-theme .text-purple-400 { color: #7e22ce !important; }
+
+        /* Back button soft style */
+        .light-theme .heritage-card .bg-gray-600 { background: #e9eef5 !important; color: #1f2937 !important; border: 1px solid #dbe4f0; }
+        .light-theme .heritage-card .bg-gray-600:hover { background: #e2e9f3 !important; }
+
+        .mandala {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 3px solid rgba(255, 153, 51, 0.3);
+            border-radius: 50%;
+            animation: mandalaRotate 20s linear infinite;
+        }
+
+        @keyframes mandalaRotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .lotus-petal {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #ff69b4, #ff1493);
+            border-radius: 50% 0;
+            animation: petalFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes petalFloat {
+
+            0%,
+            100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10%,
+            90% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(50vh) rotate(180deg);
+            }
+        }
+
+        .victory-dance {
+            animation: bharatanatyam 2s ease-in-out;
+        }
+
+        @keyframes bharatanatyam {
+
+            0%,
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+
+            25% {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            50% {
+                transform: scale(1.05) rotate(-3deg);
+            }
+
+            75% {
+                transform: scale(1.15) rotate(7deg);
+            }
+        }
+
+        .slide-in-namaste {
+            animation: namaste 1s ease-out;
+        }
+
+        @keyframes namaste {
+            0% {
+                transform: translateY(-50px) scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .cultural-shake {
+            animation: culturalShake 0.6s ease-in-out;
+        }
+
+        @keyframes culturalShake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-8px) rotate(-2deg);
+            }
+
+            75% {
+                transform: translateX(8px) rotate(2deg);
+            }
+        }
+
+        .progress-chakra {
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #ff9933, #ffffff, #138808, #ff9933);
+            animation: chakraSpin 3s linear infinite;
+        }
+
+        @keyframes chakraSpin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body class="heritage-bg light-theme min-h-screen">
+    <!-- Decorative Elements -->
+    <div id="decorations" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Main Container -->
+    <div class="relative z-10">
+        <!-- Header -->
+        <header class="text-center py-8 px-4">
+            <div class="flex justify-center items-center mb-4">
+                <span class="text-6xl mr-4"></span>
+                <h1 class="text-5xl md:text-7xl font-black kalam  text-orange-300">
+                    Indian Heritage Quest
+                </h1>
+            </div>
+            <p class="text-xl text-orange-100 kalam mb-8">
+                🏛 Discover the Rich Culture & Traditions of Incredible India 🎭
+            </p>
+
+            <!-- Player Stats -->
+            <div class="flex justify-center items-center gap-6 mb-8 flex-wrap">
+                <div class="heritage-card px-6 py-3 rounded-full">
+                    <span class="text-yellow-400 font-bold">🏆 Score: </span>
+                    <span id="playerScore" class="text-2xl font-black text-yellow-300">0</span>
+                </div>
+                <div class="heritage-card px-6 py-3 rounded-full">
+                    <span class="text-blue-400 font-bold">📚 Level: </span>
+                    <span id="playerLevel" class="text-2xl font-black text-blue-300">1</span>
+                </div>
+                <div class="heritage-card px-6 py-3 rounded-full">
+                    <span class="text-green-400 font-bold">💎 Gems: </span>
+                    <span id="playerGems" class="text-2xl font-black text-green-300">0</span>
+                </div>
+                <div class="heritage-card px-6 py-3 rounded-full">
+                    <span class="text-purple-400 font-bold">🎖 Heritage Points: </span>
+                    <span id="heritagePoints" class="text-2xl font-black text-purple-300">0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Game Selection Menu -->
+        <section id="gameMenu" class="container mx-auto px-4 pb-12">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-orange-200 mb-4 kalam">🚩 Choose Your Cultural Journey</h2>
+                <p class="text-lg text-orange-300">Explore India's incredible heritage through interactive challenges!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Monument Master -->
+                <div class="heritage-card rounded-3xl p-8 text-center">
+                    <div
+                        class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-red-600 to-orange-500 rounded-full flex items-center justify-center text-4xl">
+                        🏛
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-red-300 kalam">Monument Master</h3>
+                    <p class="text-gray-300 mb-6">Identify famous Indian landmarks, UNESCO World Heritage sites, and
+                        architectural marvels!</p>
+                    <div class="mb-4">
+                        <span class="text-yellow-400">🏆 Reward: </span>
+                        <span class="text-yellow-300 font-bold">25-50 points per monument</span>
+                    </div>
+                    <button onclick="startMonumentQuiz()"
+                        class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg">
+                        Explore Monuments 🏛
+                    </button>
+                </div>
+
+                <!-- Festival Fiesta -->
+                <div class="heritage-card rounded-3xl p-8 text-center">
+                    <div
+                        class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-4xl">
+                        🎭
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-pink-300 kalam">Festival Fiesta</h3>
+                    <p class="text-gray-300 mb-6">Learn about colorful Indian festivals, traditions, and celebrations
+                        from across the country!</p>
+                    <div class="mb-4">
+                        <span class="text-yellow-400">🏆 Reward: </span>
+                        <span class="text-yellow-300 font-bold">20-40 points per festival</span>
+                    </div>
+                    <button onclick="startFestivalQuiz()"
+                        class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg">
+                        Celebrate Culture 🎭
+                    </button>
+                </div>
+
+                <!-- Cuisine Challenge -->
+                <div class="heritage-card rounded-3xl p-8 text-center">
+                    <div
+                        class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-yellow-500 to-red-500 rounded-full flex items-center justify-center text-4xl">
+                        🍛
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-300 kalam">Cuisine Challenge</h3>
+                    <p class="text-gray-300 mb-6">Explore regional Indian foods, spices, and traditional cooking
+                        methods!</p>
+                    <div class="mb-4">
+                        <span class="text-yellow-400">🏆 Reward: </span>
+                        <span class="text-yellow-300 font-bold">15-35 points per dish</span>
+                    </div>
+                    <button onclick="startCuisineQuiz()"
+                        class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg">
+                        Taste India 🍛
+                    </button>
+                </div>
+
+                <!-- Classical Quest -->
+                <div class="heritage-card rounded-3xl p-8 text-center">
+                    <div
+                        class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-4xl">
+                        🎵
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-blue-300 kalam">Classical Quest</h3>
+                    <p class="text-gray-300 mb-6">Discover Indian classical music, dance forms, instruments, and
+                        performing arts!</p>
+                    <div class="mb-4">
+                        <span class="text-yellow-400">🏆 Reward: </span>
+                        <span class="text-yellow-300 font-bold">30-60 points per art form</span>
+                    </div>
+                    <button onclick="startArtsQuiz()"
+                        class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg">
+                        Learn Arts 🎵
+                    </button>
+                </div>
+
+                <!-- Heritage Heroes -->
+                <div class="heritage-card rounded-3xl p-8 text-center">
+                    <div
+                        class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center text-4xl">
+                        👑
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-green-300 kalam">Heritage Heroes</h3>
+                    <p class="text-gray-300 mb-6">Learn about great personalities, freedom fighters, and cultural icons
+                        of India!</p>
+                    <div class="mb-4">
+                        <span class="text-yellow-400">🏆 Reward: </span>
+                        <span class="text-yellow-300 font-bold">40-80 points per hero</span>
+                    </div>
+                    <button onclick="startHeroesQuiz()"
+                        class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg">
+                        Meet Heroes 👑
+                    </button>
+                </div>
+
+                <!-- Language Lightning -->
+                <div class="heritage-card rounded-3xl p-8 text-center ">
+                    <div
+                        class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-orange-500 to-red-600 rounded-full flex items-center justify-center text-4xl">
+                        🗣
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-orange-300 kalam">Language Lightning</h3>
+                    <p class="text-gray-300 mb-6">Explore India's 22 official languages, scripts, and linguistic
+                        diversity!</p>
+                    <div class="mb-4">
+                        <span class="text-yellow-400">🏆 Reward: </span>
+                        <span class="text-yellow-300 font-bold">50+ points + Special Gems</span>
+                    </div>
+                    <button onclick="startLanguageQuiz()"
+                        class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg">
+                        Speak India 🗣
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Area -->
+        <section id="gameArea" class="hidden container mx-auto px-4 pb-12">
+            <div class="heritage-card rounded-3xl p-8">
+                <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
+                    <h2 id="gameTitle" class="text-3xl md:text-4xl font-bold text-orange-300 kalam"></h2>
+                    <button onclick="backToMenu()"
+                        class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-6 rounded-full transition-all duration-300">
+                        ← Back to Menu
+                    </button>
+                </div>
+
+                <!-- Game Content -->
+                <div id="gameContent" class="text-center">
+                    <!-- Dynamic game content will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Game State
+        let gameState = {
+            score: 0,
+            level: 1,
+            gems: 0,
+            heritagePoints: 0,
+            currentGame: null,
+            gameData: {}
+        };
+
+        // Initialize decorative elements
+        function createDecorations() {
+            const decorationsContainer = document.getElementById('decorations');
+
+            // Create floating lotus petals
+            setInterval(() => {
+                const petal = document.createElement('div');
+                petal.className = 'lotus-petal';
+                petal.style.left = Math.random() * 100 + '%';
+                petal.style.animationDelay = Math.random() * 3 + 's';
+                petal.style.animationDuration = (Math.random() * 4 + 6) + 's';
+
+                decorationsContainer.appendChild(petal);
+
+                setTimeout(() => {
+                    petal.remove();
+                }, 10000);
+            }, 2000);
+
+            // Create rotating mandalas
+            for (let i = 0; i < 3; i++) {
+                const mandala = document.createElement('div');
+                mandala.className = 'mandala';
+                mandala.style.top = Math.random() * 100 + '%';
+                mandala.style.left = Math.random() * 100 + '%';
+                mandala.style.animationDelay = i * 2 + 's';
+                decorationsContainer.appendChild(mandala);
+            }
+        }
+
+        // Update UI
+        function updateUI() {
+            document.getElementById('playerScore').textContent = gameState.score;
+            document.getElementById('playerLevel').textContent = gameState.level;
+            document.getElementById('playerGems').textContent = gameState.gems;
+            document.getElementById('heritagePoints').textContent = gameState.heritagePoints;
+
+            // Level up logic
+            if (gameState.score >= gameState.level * 150) {
+                gameState.level++;
+                showNotification('🎉 Level Up! Amazing Progress! 🎉', 'success');
+                createCelebration();
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg font-bold text-white slide-in-namaste ${type === 'success' ? 'bg-green-600' :
+                    type === 'error' ? 'bg-red-600' : 'bg-blue-600'
+                }`;
+            notification.innerHTML = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 4000);
+        }
+
+        // Create celebration effect
+        function createCelebration() {
+            const colors = ['#ff9933', '#ffffff', '#138808', '#ff69b4', '#ffd700'];
+
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const celebration = document.createElement('div');
+                    celebration.style.position = 'fixed';
+                    celebration.style.left = Math.random() * window.innerWidth + 'px';
+                    celebration.style.top = Math.random() * window.innerHeight + 'px';
+                    celebration.style.width = '30px';
+                    celebration.style.height = '30px';
+                    celebration.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    celebration.style.borderRadius = '50%';
+                    celebration.style.zIndex = '1000';
+                    celebration.style.animation = 'bharatanatyam 1s ease-out forwards';
+
+                    document.body.appendChild(celebration);
+
+                    setTimeout(() => {
+                        celebration.remove();
+                    }, 1000);
+                }, i * 100);
+            }
+        }
+
+        // Game Navigation
+        function showGame(gameTitle) {
+            document.getElementById('gameMenu').classList.add('hidden');
+            document.getElementById('gameArea').classList.remove('hidden');
+            document.getElementById('gameTitle').textContent = gameTitle;
+            document.getElementById('gameArea').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function backToMenu() {
+            document.getElementById('gameArea').classList.add('hidden');
+            document.getElementById('gameMenu').classList.remove('hidden');
+            gameState.currentGame = null;
+            clearInterval(gameState.gameTimer);
+            document.getElementById('gameMenu').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Monument Quiz
+        function startMonumentQuiz() {
+            showGame('🏛 Monument Master Challenge');
+            gameState.currentGame = 'monuments';
+
+            const monuments = [
+                {
+                    question: "Which monument is known as the 'Symbol of Love' and is one of the Seven Wonders of the World?",
+                    options: ["Red Fort", "Taj Mahal", "Qutub Minar", "India Gate"],
+                    answer: 1,
+                    fact: "The Taj Mahal was built by Emperor Shah Jahan in memory of his wife Mumtaz Mahal!",
+                    points: 50
+                },
+                {
+                    question: "Which ancient temple complex is famous for its intricate stone carvings in Madhya Pradesh?",
+                    options: ["Khajuraho", "Konark", "Hampi", "Ellora"],
+                    answer: 0,
+                    fact: "Khajuraho temples showcase the pinnacle of Indian architectural and sculptural art!",
+                    points: 45
+                },
+                {
+                    question: "The Sun Temple is located in which Indian state?",
+                    options: ["Rajasthan", "Gujarat", "Odisha", "Karnataka"],
+                    answer: 2,
+                    fact: "The Konark Sun Temple in Odisha is designed as a giant chariot of the Sun God!",
+                    points: 40
+                },
+                {
+                    question: "Which fort is known as the 'Golden Fort' due to its yellow sandstone walls?",
+                    options: ["Mehrangarh Fort", "Jaisalmer Fort", "Amber Fort", "Chittorgarh Fort"],
+                    answer: 1,
+                    fact: "Jaisalmer Fort is one of the few living forts in the world with people still residing inside!",
+                    points: 35
+                },
+                {
+                    question: "The ancient rock-cut caves of Ajanta and Ellora are located in which state?",
+                    options: ["Madhya Pradesh", "Rajasthan", "Maharashtra", "Karnataka"],
+                    answer: 2,
+                    fact: "These caves showcase Buddhist, Hindu, and Jain art spanning over 1000 years!",
+                    points: 50
+                }
+            ];
+
+            let currentQuestion = 0;
+            let correctAnswers = 0;
+
+            function loadQuestion() {
+                if (currentQuestion >= monuments.length) {
+                    // Quiz completed
+                    const bonus = correctAnswers * 25;
+                    gameState.score += bonus;
+                    gameState.heritagePoints += correctAnswers * 10;
+                    gameState.gems += Math.floor(correctAnswers / 2);
+                    updateUI();
+
+                    document.getElementById('gameContent').innerHTML = `
+                        <div class="victory-dance text-center">
+                            <div class="text-6xl mb-6">🏛</div>
+                            <div class="text-4xl font-bold text-yellow-400 mb-4 kalam">Monument Master Complete!</div>
+                            <div class="text-2xl text-green-400 mb-2">Correct Answers: ${correctAnswers}/${monuments.length}</div>
+                            <div class="text-2xl text-blue-400 mb-2">Heritage Points: +${correctAnswers * 10}</div>
+                            <div class="text-2xl text-orange-400 mb-2">Bonus Score: +${bonus}</div>
+                            <div class="text-2xl text-purple-400 mb-6">Gems Earned: +${Math.floor(correctAnswers / 2)}</div>
+                            <button onclick="startMonumentQuiz()" class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg mr-4">
+                                Explore More 🏛
+                            </button>
+                            <button onclick="backToMenu()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-full">
+                                Back to Menu
+                            </button>
+                        </div>
+                    `;
+                    createCelebration();
+                    return;
+                }
+
+                const monument = monuments[currentQuestion];
+
+                document.getElementById('gameContent').innerHTML = `
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-6">
+                            <div class="text-2xl font-bold text-orange-400 mb-2 kalam">Question ${currentQuestion + 1} of ${monuments.length}</div>
+                            <div class="text-xl text-yellow-400">🏆 ${monument.points} points</div>
+                        </div>
+                        
+                        <div class="heritage-card rounded-2xl p-6 mb-6">
+                            <div class="text-2xl font-bold text-white mb-8">${monument.question}</div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                ${monument.options.map((option, index) => `
+                                    <button onclick="selectAnswer(${index})" class="bg-white/10 hover:bg-white/20 border-2 border-orange-400 rounded-lg p-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105">
+                                        ${String.fromCharCode(65 + index)}. ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            
+                            <div id="questionResult" class="text-xl font-bold mt-4"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window.selectAnswer = function (selectedIndex) {
+                const monument = monuments[currentQuestion];
+                const isCorrect = selectedIndex === monument.answer;
+
+                if (isCorrect) {
+                    correctAnswers++;
+                    gameState.score += monument.points;
+                    updateUI();
+
+                    document.getElementById('questionResult').innerHTML = `
+                        <div class="text-green-400">🎉 Correct! Excellent! +${monument.points} points</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${monument.fact}</div>
+                    `;
+                    showNotification('Correct Answer! 🏛', 'success');
+                } else {
+                    document.getElementById('questionResult').innerHTML = `
+                        <div class="text-red-400 cultural-shake">❌ Wrong Answer! Try Again</div>
+                        <div class="text-yellow-300 mt-2">Correct: ${monument.options[monument.answer]}</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${monument.fact}</div>
+                    `;
+                }
+
+                // Disable all buttons
+                const buttons = document.querySelectorAll('button[onclick^="selectAnswer"]');
+                buttons.forEach(btn => btn.disabled = true);
+
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadQuestion();
+                }, 3000);
+            };
+
+            loadQuestion();
+        }
+
+        // Festival Quiz
+        function startFestivalQuiz() {
+            showGame('🎭 Festival Fiesta Challenge');
+            gameState.currentGame = 'festivals';
+
+            const festivals = [
+                {
+                    question: "Which festival is known as the 'Festival of Lights'?",
+                    options: ["Holi", "Diwali", "Dussehra", "Karva Chauth"],
+                    answer: 1,
+                    fact: "Diwali celebrates the return of Lord Rama to Ayodhya and the victory of light over darkness!",
+                    points: 30
+                },
+                {
+                    question: "Holi is primarily celebrated in which season?",
+                    options: ["Winter", "Summer", "Spring", "Monsoon"],
+                    answer: 2,
+                    fact: "Holi marks the arrival of spring and the end of winter in India!",
+                    points: 25
+                },
+                {
+                    question: "Which festival involves flying colorful kites?",
+                    options: ["Makar Sankranti", "Baisakhi", "Onam", "Pongal"],
+                    answer: 0,
+                    fact: "Makar Sankranti celebrates the sun's journey northward and is famous for kite flying!",
+                    points: 35
+                },
+                {
+                    question: "Durga Puja is most grandly celebrated in which state?",
+                    options: ["Maharashtra", "West Bengal", "Tamil Nadu", "Kerala"],
+                    answer: 1,
+                    fact: "West Bengal transforms into a cultural paradise during Durga Puja with elaborate pandals!",
+                    points: 40
+                },
+                {
+                    question: "Which festival is celebrated by creating beautiful rangoli patterns?",
+                    options: ["Eid", "Christmas", "Diwali", "Guru Nanak Jayanti"],
+                    answer: 2,
+                    fact: "Rangoli patterns during Diwali are believed to welcome Goddess Lakshmi into homes!",
+                    points: 30
+                }
+            ];
+
+            let currentQuestion = 0;
+            let correctAnswers = 0;
+
+            function loadQuestion() {
+                if (currentQuestion >= festivals.length) {
+                    const bonus = correctAnswers * 20;
+                    gameState.score += bonus;
+                    gameState.heritagePoints += correctAnswers * 8;
+                    gameState.gems += Math.floor(correctAnswers / 2);
+                    updateUI();
+
+                    document.getElementById('gameContent').innerHTML = `
+                        <div class="victory-dance text-center">
+                            <div class="text-6xl mb-6">🎭</div>
+                            <div class="text-4xl font-bold text-pink-400 mb-4 kalam">Festival Fiesta Complete!</div>
+                            <div class="text-2xl text-green-400 mb-2">Correct Answers: ${correctAnswers}/${festivals.length}</div>
+                            <div class="text-2xl text-blue-400 mb-2">Heritage Points: +${correctAnswers * 8}</div>
+                            <div class="text-2xl text-orange-400 mb-2">Bonus Score: +${bonus}</div>
+                            <div class="text-2xl text-purple-400 mb-6">Gems Earned: +${Math.floor(correctAnswers / 2)}</div>
+                            <button onclick="startFestivalQuiz()" class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg mr-4">
+                                More Festivals 🎭
+                            </button>
+                            <button onclick="backToMenu()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-full">
+                                Back to Menu
+                            </button>
+                        </div>
+                    `;
+                    createCelebration();
+                    return;
+                }
+
+                const festival = festivals[currentQuestion];
+
+                document.getElementById('gameContent').innerHTML = `
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-6">
+                            <div class="text-2xl font-bold text-pink-400 mb-2 kalam">Festival ${currentQuestion + 1} of ${festivals.length}</div>
+                            <div class="text-xl text-yellow-400">🏆 ${festival.points} points</div>
+                        </div>
+                        
+                        <div class="heritage-card rounded-2xl p-6 mb-6">
+                            <div class="text-2xl font-bold text-white mb-8">${festival.question}</div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                ${festival.options.map((option, index) => `
+                                    <button onclick="selectFestivalAnswer(${index})" class="bg-white/10 hover:bg-white/20 border-2 border-pink-400 rounded-lg p-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105">
+                                        ${String.fromCharCode(65 + index)}. ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            
+                            <div id="festivalResult" class="text-xl font-bold mt-4"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window.selectFestivalAnswer = function (selectedIndex) {
+                const festival = festivals[currentQuestion];
+                const isCorrect = selectedIndex === festival.answer;
+
+                if (isCorrect) {
+                    correctAnswers++;
+                    gameState.score += festival.points;
+                    updateUI();
+
+                    document.getElementById('festivalResult').innerHTML = `
+                        <div class="text-green-400">🎉 Excellent! Perfect Answer! +${festival.points} points</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${festival.fact}</div>
+                    `;
+                    showNotification('Festival Expert! 🎭', 'success');
+                } else {
+                    document.getElementById('festivalResult').innerHTML = `
+                        <div class="text-red-400 cultural-shake">❌ Wrong Answer! Keep Learning</div>
+                        <div class="text-yellow-300 mt-2">Correct: ${festival.options[festival.answer]}</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${festival.fact}</div>
+                    `;
+                }
+
+                const buttons = document.querySelectorAll('button[onclick^="selectFestivalAnswer"]');
+                buttons.forEach(btn => btn.disabled = true);
+
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadQuestion();
+                }, 3000);
+            };
+
+            loadQuestion();
+        }
+
+        // Cuisine Quiz
+        function startCuisineQuiz() {
+            showGame('🍛 Cuisine Challenge');
+            gameState.currentGame = 'cuisine';
+
+            const dishes = [
+                {
+                    question: "Which spice is known as the 'Queen of Spices' in Indian cuisine?",
+                    options: ["Turmeric", "Cardamom", "Cinnamon", "Black Pepper"],
+                    answer: 1,
+                    fact: "Cardamom is native to India and is used in both sweet and savory dishes!",
+                    points: 25
+                },
+                {
+                    question: "Biryani originated from which cuisine influence?",
+                    options: ["Mughal", "British", "Portuguese", "French"],
+                    answer: 0,
+                    fact: "Biryani was brought to India by Mughal rulers and has become an integral part of Indian cuisine!",
+                    points: 30
+                },
+                {
+                    question: "Which South Indian dish is served on a banana leaf?",
+                    options: ["Dosa", "Idli", "Sadya", "Vada"],
+                    answer: 2,
+                    fact: "Kerala's Sadya is a traditional feast served on banana leaves with multiple courses!",
+                    points: 35
+                },
+                {
+                    question: "Rajma is a popular dish from which region?",
+                    options: ["South India", "North India", "East India", "West India"],
+                    answer: 1,
+                    fact: "Rajma-chawal is a beloved comfort food combination in North Indian households!",
+                    points: 20
+                },
+                {
+                    question: "Which sweet is known as the 'King of Indian Sweets'?",
+                    options: ["Gulab Jamun", "Rasgulla", "Jalebi", "Rasgulla"],
+                    answer: 0,
+                    fact: "Gulab Jamun's name comes from 'gulab' (rose) and 'jamun' (a fruit it resembles)!",
+                    points: 25
+                }
+            ];
+
+            let currentQuestion = 0;
+            let correctAnswers = 0;
+
+            function loadQuestion() {
+                if (currentQuestion >= dishes.length) {
+                    const bonus = correctAnswers * 15;
+                    gameState.score += bonus;
+                    gameState.heritagePoints += correctAnswers * 6;
+                    gameState.gems += Math.floor(correctAnswers / 3);
+                    updateUI();
+
+                    document.getElementById('gameContent').innerHTML = `
+                        <div class="victory-dance text-center">
+                            <div class="text-6xl mb-6">🍛</div>
+                            <div class="text-4xl font-bold text-yellow-400 mb-4 kalam">Cuisine Challenge Complete!</div>
+                            <div class="text-2xl text-green-400 mb-2">Correct Answers: ${correctAnswers}/${dishes.length}</div>
+                            <div class="text-2xl text-blue-400 mb-2">Heritage Points: +${correctAnswers * 6}</div>
+                            <div class="text-2xl text-orange-400 mb-2">Bonus Score: +${bonus}</div>
+                            <div class="text-2xl text-purple-400 mb-6">Gems Earned: +${Math.floor(correctAnswers / 3)}</div>
+                            <button onclick="startCuisineQuiz()" class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg mr-4">
+                                More Flavors 🍛
+                            </button>
+                            <button onclick="backToMenu()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-full">
+                                Back to Menu
+                            </button>
+                        </div>
+                    `;
+                    createCelebration();
+                    return;
+                }
+
+                const dish = dishes[currentQuestion];
+
+                document.getElementById('gameContent').innerHTML = `
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-6">
+                            <div class="text-2xl font-bold text-yellow-400 mb-2 kalam">Dish ${currentQuestion + 1} of ${dishes.length}</div>
+                            <div class="text-xl text-orange-400">🏆 ${dish.points} points</div>
+                        </div>
+                        
+                        <div class="heritage-card rounded-2xl p-6 mb-6">
+                            <div class="text-2xl font-bold text-white mb-8">${dish.question}</div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                ${dish.options.map((option, index) => `
+                                    <button onclick="selectCuisineAnswer(${index})" class="bg-white/10 hover:bg-white/20 border-2 border-yellow-400 rounded-lg p-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105">
+                                        ${String.fromCharCode(65 + index)}. ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            
+                            <div id="cuisineResult" class="text-xl font-bold mt-4"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window.selectCuisineAnswer = function (selectedIndex) {
+                const dish = dishes[currentQuestion];
+                const isCorrect = selectedIndex === dish.answer;
+
+                if (isCorrect) {
+                    correctAnswers++;
+                    gameState.score += dish.points;
+                    updateUI();
+
+                    document.getElementById('cuisineResult').innerHTML = `
+                        <div class="text-green-400">🎉 Delicious! Perfect Answer! +${dish.points} points</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${dish.fact}</div>
+                    `;
+                    showNotification('Food Expert! 🍛', 'success');
+                } else {
+                    document.getElementById('cuisineResult').innerHTML = `
+                        <div class="text-red-400 cultural-shake">❌ Wrong Answer! Keep Trying</div>
+                        <div class="text-yellow-300 mt-2">Correct: ${dish.options[dish.answer]}</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${dish.fact}</div>
+                    `;
+                }
+
+                const buttons = document.querySelectorAll('button[onclick^="selectCuisineAnswer"]');
+                buttons.forEach(btn => btn.disabled = true);
+
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadQuestion();
+                }, 3000);
+            };
+
+            loadQuestion();
+        }
+
+        // Arts Quiz
+        function startArtsQuiz() {
+            showGame('🎵 Classical Quest Challenge');
+            gameState.currentGame = 'arts';
+
+            const arts = [
+                {
+                    question: "Which classical dance form originated in Tamil Nadu?",
+                    options: ["Kathak", "Bharatanatyam", "Odissi", "Kuchipudi"],
+                    answer: 1,
+                    fact: "Bharatanatyam is one of the oldest classical dance forms and tells stories through expressions!",
+                    points: 40
+                },
+                {
+                    question: "The sitar is primarily associated with which type of music?",
+                    options: ["Folk", "Classical", "Devotional", "Film"],
+                    answer: 1,
+                    fact: "The sitar became world-famous through maestros like Pandit Ravi Shankar!",
+                    points: 35
+                },
+                {
+                    question: "Which art form uses intricate hand gestures called 'mudras'?",
+                    options: ["Painting", "Classical Dance", "Sculpture", "Music"],
+                    answer: 1,
+                    fact: "Mudras in classical dance can express emotions, objects, and entire stories!",
+                    points: 45
+                },
+                {
+                    question: "Tanjore paintings originated in which state?",
+                    options: ["Kerala", "Karnataka", "Tamil Nadu", "Andhra Pradesh"],
+                    answer: 2,
+                    fact: "Tanjore paintings are known for their rich colors, surface richness, and compact composition!",
+                    points: 50
+                },
+                {
+                    question: "Which percussion instrument is considered the 'King of Drums'?",
+                    options: ["Dhol", "Tabla", "Mridangam", "Pakhawaj"],
+                    answer: 2,
+                    fact: "The Mridangam is essential in Carnatic music and produces a wide range of tones!",
+                    points: 40
+                }
+            ];
+
+            let currentQuestion = 0;
+            let correctAnswers = 0;
+
+            function loadQuestion() {
+                if (currentQuestion >= arts.length) {
+                    const bonus = correctAnswers * 30;
+                    gameState.score += bonus;
+                    gameState.heritagePoints += correctAnswers * 12;
+                    gameState.gems += Math.floor(correctAnswers / 2);
+                    updateUI();
+
+                    document.getElementById('gameContent').innerHTML = `
+                        <div class="victory-dance text-center">
+                            <div class="text-6xl mb-6">🎵</div>
+                            <div class="text-4xl font-bold text-blue-400 mb-4 kalam">Classical Quest Complete!</div>
+                            <div class="text-2xl text-green-400 mb-2">Correct Answers: ${correctAnswers}/${arts.length}</div>
+                            <div class="text-2xl text-blue-400 mb-2">Heritage Points: +${correctAnswers * 12}</div>
+                            <div class="text-2xl text-orange-400 mb-2">Bonus Score: +${bonus}</div>
+                            <div class="text-2xl text-purple-400 mb-6">Gems Earned: +${Math.floor(correctAnswers / 2)}</div>
+                            <button onclick="startArtsQuiz()" class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg mr-4">
+                                More Arts 🎵
+                            </button>
+                            <button onclick="backToMenu()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-full">
+                                Back to Menu
+                            </button>
+                        </div>
+                    `;
+                    createCelebration();
+                    return;
+                }
+
+                const art = arts[currentQuestion];
+
+                document.getElementById('gameContent').innerHTML = `
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-6">
+                            <div class="text-2xl font-bold text-blue-400 mb-2 kalam">Art Form ${currentQuestion + 1} of ${arts.length}</div>
+                            <div class="text-xl text-yellow-400">🏆 ${art.points} points</div>
+                        </div>
+                        
+                        <div class="heritage-card rounded-2xl p-6 mb-6">
+                            <div class="text-2xl font-bold text-white mb-8">${art.question}</div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                ${art.options.map((option, index) => `
+                                    <button onclick="selectArtsAnswer(${index})" class="bg-white/10 hover:bg-white/20 border-2 border-blue-400 rounded-lg p-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105">
+                                        ${String.fromCharCode(65 + index)}. ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            
+                            <div id="artsResult" class="text-xl font-bold mt-4"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window.selectArtsAnswer = function (selectedIndex) {
+                const art = arts[currentQuestion];
+                const isCorrect = selectedIndex === art.answer;
+
+                if (isCorrect) {
+                    correctAnswers++;
+                    gameState.score += art.points;
+                    updateUI();
+
+                    document.getElementById('artsResult').innerHTML = `
+                        <div class="text-green-400">🎉 Artist! Brilliant Answer! +${art.points} points</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${art.fact}</div>
+                    `;
+                    showNotification('Arts Master! 🎵', 'success');
+                } else {
+                    document.getElementById('artsResult').innerHTML = `
+                        <div class="text-red-400 cultural-shake">❌ Wrong Answer! Practice More</div>
+                        <div class="text-yellow-300 mt-2">Correct: ${art.options[art.answer]}</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${art.fact}</div>
+                    `;
+                }
+
+                const buttons = document.querySelectorAll('button[onclick^="selectArtsAnswer"]');
+                buttons.forEach(btn => btn.disabled = true);
+
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadQuestion();
+                }, 3000);
+            };
+
+            loadQuestion();
+        }
+
+        // Heroes Quiz
+        function startHeroesQuiz() {
+            showGame('👑 Heritage Heroes Challenge');
+            gameState.currentGame = 'heroes';
+
+            const heroes = [
+                {
+                    question: "Who is known as the 'Father of the Nation' in India?",
+                    options: ["Jawaharlal Nehru", "Mahatma Gandhi", "Sardar Patel", "Subhas Chandra Bose"],
+                    answer: 1,
+                    fact: "Mahatma Gandhi led India's independence movement through non-violent civil disobedience!",
+                    points: 50
+                },
+                {
+                    question: "Which freedom fighter was known as 'Netaji'?",
+                    options: ["Bhagat Singh", "Chandrashekhar Azad", "Subhas Chandra Bose", "Lala Lajpat Rai"],
+                    answer: 2,
+                    fact: "Netaji formed the Indian National Army (INA) to fight for India's independence!",
+                    points: 60
+                },
+                {
+                    question: "Who was the first woman Prime Minister of India?",
+                    options: ["Sarojini Naidu", "Indira Gandhi", "Sushma Swaraj", "Pratibha Patil"],
+                    answer: 1,
+                    fact: "Indira Gandhi served as Prime Minister for 15 years and was known as the 'Iron Lady'!",
+                    points: 45
+                },
+                {
+                    question: "Which scientist is known as the 'Missile Man of India'?",
+                    options: ["C.V. Raman", "Homi Bhabha", "A.P.J. Abdul Kalam", "Vikram Sarabhai"],
+                    answer: 2,
+                    fact: "Dr. Kalam was instrumental in India's missile and space programs and later became President!",
+                    points: 55
+                },
+                {
+                    question: "Who composed the Indian National Anthem 'Jana Gana Mana'?",
+                    options: ["Bankim Chandra Chatterjee", "Rabindranath Tagore", "Sarojini Naidu", "Kavi Pradeep"],
+                    answer: 1,
+                    fact: "Rabindranath Tagore was the first non-European to win the Nobel Prize in Literature!",
+                    points: 70
+                }
+            ];
+
+            let currentQuestion = 0;
+            let correctAnswers = 0;
+
+            function loadQuestion() {
+                if (currentQuestion >= heroes.length) {
+                    const bonus = correctAnswers * 40;
+                    gameState.score += bonus;
+                    gameState.heritagePoints += correctAnswers * 15;
+                    gameState.gems += Math.floor(correctAnswers / 2);
+                    updateUI();
+
+                    document.getElementById('gameContent').innerHTML = `
+                        <div class="victory-dance text-center">
+                            <div class="text-6xl mb-6">👑</div>
+                            <div class="text-4xl font-bold text-green-400 mb-4 kalam">Heritage Heroes Complete!</div>
+                            <div class="text-2xl text-green-400 mb-2">Correct Answers: ${correctAnswers}/${heroes.length}</div>
+                            <div class="text-2xl text-blue-400 mb-2">Heritage Points: +${correctAnswers * 15}</div>
+                            <div class="text-2xl text-orange-400 mb-2">Bonus Score: +${bonus}</div>
+                            <div class="text-2xl text-purple-400 mb-6">Gems Earned: +${Math.floor(correctAnswers / 2)}</div>
+                            <button onclick="startHeroesQuiz()" class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg mr-4">
+                                More Heroes 👑
+                            </button>
+                            <button onclick="backToMenu()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-full">
+                                Back to Menu
+                            </button>
+                        </div>
+                    `;
+                    createCelebration();
+                    return;
+                }
+
+                const hero = heroes[currentQuestion];
+
+                document.getElementById('gameContent').innerHTML = `
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-6">
+                            <div class="text-2xl font-bold text-green-400 mb-2 kalam">Hero ${currentQuestion + 1} of ${heroes.length}</div>
+                            <div class="text-xl text-yellow-400">🏆 ${hero.points} points</div>
+                        </div>
+                        
+                        <div class="heritage-card rounded-2xl p-6 mb-6">
+                            <div class="text-2xl font-bold text-white mb-8">${hero.question}</div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                ${hero.options.map((option, index) => `
+                                    <button onclick="selectHeroAnswer(${index})" class="bg-white/10 hover:bg-white/20 border-2 border-green-400 rounded-lg p-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105">
+                                        ${String.fromCharCode(65 + index)}. ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            
+                            <div id="heroResult" class="text-xl font-bold mt-4"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window.selectHeroAnswer = function (selectedIndex) {
+                const hero = heroes[currentQuestion];
+                const isCorrect = selectedIndex === hero.answer;
+
+                if (isCorrect) {
+                    correctAnswers++;
+                    gameState.score += hero.points;
+                    updateUI();
+
+                    document.getElementById('heroResult').innerHTML = `
+                        <div class="text-green-400">🎉 Hero! Outstanding Answer! +${hero.points} points</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${hero.fact}</div>
+                    `;
+                    showNotification('Heritage Hero! 👑', 'success');
+                } else {
+                    document.getElementById('heroResult').innerHTML = `
+                        <div class="text-red-400 cultural-shake">❌ Wrong Answer! Study More</div>
+                        <div class="text-yellow-300 mt-2">Correct: ${hero.options[hero.answer]}</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${hero.fact}</div>
+                    `;
+                }
+
+                const buttons = document.querySelectorAll('button[onclick^="selectHeroAnswer"]');
+                buttons.forEach(btn => btn.disabled = true);
+
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadQuestion();
+                }, 3000);
+            };
+
+            loadQuestion();
+        }
+
+        // Language Quiz
+        function startLanguageQuiz() {
+            showGame('🗣 Language Lightning Challenge');
+            gameState.currentGame = 'language';
+
+            const languages = [
+                {
+                    question: "How many official languages are recognized by the Indian Constitution?",
+                    options: ["18", "20", "22", "24"],
+                    answer: 2,
+                    fact: "The 8th Schedule of the Indian Constitution recognizes 22 official languages!",
+                    points: 60
+                },
+                {
+                    question: "Which script is used to write Hindi?",
+                    options: ["Roman", "Devanagari", "Gurmukhi", "Bengali"],
+                    answer: 1,
+                    fact: "Devanagari script is also used for Sanskrit, Marathi, and Nepali languages!",
+                    points: 40
+                },
+                {
+                    question: "Sanskrit is written in which script?",
+                    options: ["Tamil", "Devanagari", "Telugu", "Kannada"],
+                    answer: 1,
+                    fact: "Sanskrit is considered the mother of many Indian languages and has influenced them greatly!",
+                    points: 50
+                },
+                {
+                    question: "Which language has the most native speakers in India?",
+                    options: ["Bengali", "Telugu", "Hindi", "Tamil"],
+                    answer: 2,
+                    fact: "Hindi is spoken by over 40% of India's population as a first or second language!",
+                    points: 45
+                },
+                {
+                    question: "The phrase 'Vasudhaiva Kutumbakam' means?",
+                    options: ["Truth alone triumphs", "The world is one family", "Knowledge is power", "Unity in diversity"],
+                    answer: 1,
+                    fact: "This Sanskrit phrase embodies India's philosophy of universal brotherhood!",
+                    points: 70
+                }
+            ];
+
+            let currentQuestion = 0;
+            let correctAnswers = 0;
+
+            function loadQuestion() {
+                if (currentQuestion >= languages.length) {
+                    const bonus = correctAnswers * 50;
+                    gameState.score += bonus;
+                    gameState.heritagePoints += correctAnswers * 20;
+                    gameState.gems += correctAnswers;
+                    updateUI();
+
+                    document.getElementById('gameContent').innerHTML = `
+                        <div class="victory-dance text-center">
+                            <div class="text-6xl mb-6">🗣</div>
+                            <div class="text-4xl font-bold text-orange-400 mb-4 kalam">Language Lightning Complete!</div>
+                            <div class="text-2xl text-green-400 mb-2">Correct Answers: ${correctAnswers}/${languages.length}</div>
+                            <div class="text-2xl text-blue-400 mb-2">Heritage Points: +${correctAnswers * 20}</div>
+                            <div class="text-2xl text-orange-400 mb-2">Bonus Score: +${bonus}</div>
+                            <div class="text-2xl text-purple-400 mb-6">Special Gems: +${correctAnswers}</div>
+                            <button onclick="startLanguageQuiz()" class="indian-button text-white font-bold py-3 px-8 rounded-full text-lg mr-4">
+                                More Languages 🗣
+                            </button>
+                            <button onclick="backToMenu()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-full">
+                                Back to Menu
+                            </button>
+                        </div>
+                    `;
+                    createCelebration();
+                    return;
+                }
+
+                const language = languages[currentQuestion];
+
+                document.getElementById('gameContent').innerHTML = `
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-6">
+                            <div class="text-2xl font-bold text-orange-400 mb-2 kalam">Language ${currentQuestion + 1} of ${languages.length}</div>
+                            <div class="text-xl text-yellow-400">🏆 ${language.points} points</div>
+                        </div>
+                        
+                        <div class="heritage-card rounded-2xl p-6 mb-6">
+                            <div class="text-2xl font-bold text-white mb-8">${language.question}</div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                ${language.options.map((option, index) => `
+                                    <button onclick="selectLanguageAnswer(${index})" class="bg-white/10 hover:bg-white/20 border-2 border-orange-400 rounded-lg p-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105">
+                                        ${String.fromCharCode(65 + index)}. ${option}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            
+                            <div id="languageResult" class="text-xl font-bold mt-4"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            window.selectLanguageAnswer = function (selectedIndex) {
+                const language = languages[currentQuestion];
+                const isCorrect = selectedIndex === language.answer;
+
+                if (isCorrect) {
+                    correctAnswers++;
+                    gameState.score += language.points;
+                    updateUI();
+
+                    document.getElementById('languageResult').innerHTML = `
+                        <div class="text-green-400">🎉 Language Guru! Amazing Answer! +${language.points} points</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${language.fact}</div>
+                    `;
+                    showNotification('Language Master! 🗣', 'success');
+                } else {
+                    document.getElementById('languageResult').innerHTML = `
+                        <div class="text-red-400 cultural-shake">❌ Wrong Answer! Learn More</div>
+                        <div class="text-yellow-300 mt-2">Correct: ${language.options[language.answer]}</div>
+                        <div class="text-blue-300 mt-2 text-lg">💡 ${language.fact}</div>
+                    `;
+                }
+
+                const buttons = document.querySelectorAll('button[onclick^="selectLanguageAnswer"]');
+                buttons.forEach(btn => btn.disabled = true);
+
+                setTimeout(() => {
+                    currentQuestion++;
+                    loadQuestion();
+                }, 3000);
+            };
+
+            loadQuestion();
+        }
+
+        // Initialize the
+        document.addEventListener('DOMContentLoaded', function () {
+            createDecorations();
+            updateUI();
+
+            // Add entrance animations
+            setTimeout(() => {
+                document.querySelectorAll('.heritage-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('slide-in-namaste');
+                    }, index * 200);
+                });
+            }, 500);
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'97c0009582d24850',t:'MTc1NzM1MDgyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) window.addEventListener('DOMContentLoaded', c); else window.attachEvent('onload', c) } })();</script>

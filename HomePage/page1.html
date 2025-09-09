@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Heritage & Travel AI Assistant - Bootstrap</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        /* ===========================================
+           GLOBAL STYLES
+        =========================================== */
+        :root {
+            --primary-orange: #ff6b35;
+            --primary-red: #dc3545;
+            --secondary-saffron: #ff9500;
+            --accent-gold: #ffd700;
+            --text-dark: #2c3e50;
+            --bg-light: #f8f9fa;
+            --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-medium: 0 4px 20px rgba(0,0,0,0.15);
+            --gradient-primary: linear-gradient(135deg, #3f4a70 0%, #d4d4d4 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff9500 0%, #ffd700 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff5f0 0%, #ffe8e8 50%, #fff0f5 100%);
+            min-height: 100vh;
+        }
+
+        /* ===========================================
+           HEADER STYLES
+        =========================================== */
+        .header-gradient {
+            background: var(--gradient-primary);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .header-title {
+            font-weight: 700;
+            font-size: 1.75rem;
+        }
+
+        .header-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse-status 2s infinite;
+        }
+
+        @keyframes pulse-status {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .ai-badge {
+            background: var(--gradient-secondary);
+            animation: glow-badge 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow-badge {
+            from { box-shadow: 0 0 5px rgba(255, 107, 53, 0.5); }
+            to { box-shadow: 0 0 15px rgba(255, 149, 0, 0.8); }
+        }
+
+        /* ===========================================
+           SIDEBAR STYLES
+        =========================================== */
+        .sidebar-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            border: none;
+            height: fit-content;
+        }
+
+        .profile-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .profile-icon {
+            width: 20px;
+            margin-right: 8px;
+            color: var(--primary-orange);
+        }
+
+        .suggestion-btn {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            text-align: left;
+        }
+
+        .suggestion-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .recent-topic {
+            color: #007bff;
+            cursor: pointer;
+            font-size: 0.875rem;
+            padding: 0.25rem 0;
+            border-bottom: 1px solid #f1f3f4;
+            transition: color 0.3s ease;
+        }
+
+        .recent-topic:hover {
+            color: var(--primary-orange);
+            text-decoration: underline;
+        }
+
+        .quick-category-btn {
+            border-radius: 10px;
+            padding: 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-category-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+        }
+
+        /* ===========================================
+           CHAT STYLES
+        =========================================== */
+        .chat-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            border: none;
+            height: calc(170vh - 200px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #fff5f0 0%, #ffe8e8 100%);
+            border-radius: 15px 15px 0 0;
+            padding: 2rem;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .ai-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .welcome-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-subtitle {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+
+        .action-card {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--primary-orange);
+        }
+
+        .action-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .action-subtitle {
+            font-size: 0.75rem;
+            color: #6c757d;
+        }
+
+        .messages-area {
+            
+            flex: 1;
+            overflow-y: auto;
+            padding: 15.2rem;
+            scroll-behavior: smooth;
+        }
+
+        .message-bubble {
+            max-width: 75%;
+            padding: 1rem 1.25rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-light);
+            position: relative;
+        }
+
+        .message-user {
+            background: var(--gradient-primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+
+        .message-ai {
+            background: linear-gradient(135deg, #d2d2d2 0%, #d4d3d3 100%);
+            color: rgb(0, 0, 0);
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-content {
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .typing-indicator {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+            max-width: 200px;
+        }
+
+        .typing-dots {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #6c757d;
+            border-radius: 50%;
+            animation: typing-bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing-bounce {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ===========================================
+           INPUT AREA STYLES
+        =========================================== */
+        .input-section {
+            background: white;
+            border-radius: 0 0 15px 15px;
+            padding: 1.5rem;
+            border-top: 1px solid #f1f3f4;
+        }
+
+        .message-input {
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1rem 1.25rem;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            resize: vertical;
+            min-height: 100px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .message-input:focus {
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+        }
+
+        .send-btn {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-light);
+            height: fit-content;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            background: var(--gradient-primary);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.6;
+            transform: none;
+        }
+
+        .char-counter {
+            font-size: 0.75rem;
+            color: #6c757d;
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+        }
+
+        .char-counter.text-danger {
+            color: #dc3545 !important;
+        }
+
+        .quick-response-btn {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.75rem;
+            color: #495057;
+            transition: all 0.3s ease;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-response-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+
+        /* ===========================================
+           RESPONSIVE STYLES
+        =========================================== */
+        @media (max-width: 991.98px) {
+            .sidebar-card {
+                margin-bottom: 1rem;
+            }
+            
+            .chat-container {
+                height: calc(100vh - 300px);
+            }
+            
+            .message-bubble {
+                max-width: 90%;
+            }
+            
+            .welcome-section {
+                padding: 1.5rem;
+            }
+            
+            .ai-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .header-title {
+                font-size: 1.25rem;
+            }
+            
+            .welcome-section {
+                padding: 1rem;
+            }
+            
+            .action-card {
+                padding: 0.75rem;
+            }
+            
+            .message-bubble {
+                max-width: 95%;
+                padding: 0.75rem 1rem;
+            }
+            
+            .input-section {
+                padding: 1rem;
+            }
+        }
+
+        /* ===========================================
+           UTILITY CLASSES
+        =========================================== */
+        .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .shadow-custom {
+            box-shadow: var(--shadow-light);
+        }
+
+        .shadow-custom-hover:hover {
+            box-shadow: var(--shadow-medium);
+        }
+
+        .border-radius-custom {
+            border-radius: 15px;
+        }
+
+        .text-orange {
+            color: var(--primary-orange);
+        }
+
+        .bg-orange {
+            background-color: var(--primary-orange);
+        }
+
+        .btn-orange {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+        }
+
+        .btn-orange:hover {
+            background: var(--gradient-primary);
+            filter: brightness(1.1);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===========================================
+         HEADER SECTION
+    =========================================== -->
+    <header class="header-gradient text-white py-3 sticky-top">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="d-flex align-items-center">
+                        <div class="me-3">
+                            <i class="bi bi-flag-fill" style="font-size: 2rem;"></i>
+                        </div>
+                        <div>
+                            <h1 class="header-title mb-1">India Heritage AI Pro</h1>
+                            <p class="header-subtitle mb-0">Advanced Cultural & Travel Intelligence</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="d-flex align-items-center justify-content-md-end">
+                        <span class="badge ai-badge text-dark fw-semibold me-3">
+                            <i class="bi bi-brain me-1"></i>Advanced AI
+                        </span>
+                        <div class="d-none d-md-flex align-items-center">
+                            <div class="status-indicator me-2"></div>
+                            <small>Smart Assistant Online</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===========================================
+         MAIN CONTENT AREA
+    =========================================== -->
+    <div class="container-fluid py-4">
+        <div class="row">
+            <!-- ===========================================
+                 SIDEBAR - USER PROFILE & QUICK ACCESS
+            =========================================== -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="card sidebar-card">
+                    <div class="card-body">
+                        <!-- User Profile Section -->
+                        <div class="profile-section">
+                            <h6 class="fw-semibold mb-3 text-dark">
+                                <i class="bi bi-person-circle me-2"></i>Your Travel Profile
+                            </h6>
+                            <div id="userProfile">
+                                <div class="profile-item">
+                                    <i class="bi bi-bullseye profile-icon"></i>
+                                    <span class="text-muted">Interests: </span>
+                                    <span id="userInterests" class="ms-1 fw-medium">Not set</span>
+                                </div>
+                                <div class="profile-item">
+                                    <i class="bi bi-calendar-event profile-icon"></i>
+                                    <span class="text-muted">Travel Style: </span>
+                                    <span id="travelStyle" class="ms-1 fw-medium">Not set</span>
+                                </div>
+                                <div class="profile-item">
+                                    <i class="bi bi-wallet2 profile-icon"></i>
+                                    <span class="text-muted">Budget: </span>
+                                    <span id="budgetRange" class="ms-1 fw-medium">Not set</span>
+                                </div>
+                                <div class="profile-item">
+                                    <i class="bi bi-translate profile-icon"></i>
+                                    <span class="text-muted">Languages: </span>
+                                    <span id="languages" class="ms-1 fw-medium">Not set</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Smart Suggestions -->
+                        <div class="mb-4">
+                            <h6 class="fw-semibold mb-3 text-dark">
+                                <i class="bi bi-lightbulb me-2"></i>Smart Suggestions
+                            </h6>
+                            <div id="smartSuggestions">
+                                <button class="suggestion-btn" onclick="sendQuickMessage('Plan a personalized 10-day India itinerary')">
+                                    <i class="bi bi-map me-2"></i>Custom Itinerary Planning
+                                </button>
+                                <button class="suggestion-btn" onclick="sendQuickMessage('Best heritage sites for photography')">
+                                    <i class="bi bi-camera me-2"></i>Photography Destinations
+                                </button>
+                                <button class="suggestion-btn" onclick="sendQuickMessage('Budget breakdown for Golden Triangle')">
+                                    <i class="bi bi-calculator me-2"></i>Budget Planning
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Recent Topics -->
+                        <div class="mb-4">
+                            <h6 class="fw-semibold mb-3 text-dark">
+                                <i class="bi bi-clock-history me-2"></i>Recent Topics
+                            </h6>
+                            <div id="recentTopics">
+                                <p class="text-muted small mb-0">No recent conversations</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Categories -->
+                        <div>
+                            <h6 class="fw-semibold mb-3 text-dark">
+                                <i class="bi bi-grid me-2"></i>Quick Categories
+                            </h6>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-warning w-100" onclick="sendQuickMessage('Plan a 7-day Golden Triangle tour')">
+                                        <i class="bi bi-building d-block mb-1"></i>
+                                        <small>Golden Triangle</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-success w-100" onclick="sendQuickMessage('Kerala backwater experience guide')">
+                                        <i class="bi bi-water d-block mb-1"></i>
+                                        <small>Kerala</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-danger w-100" onclick="sendQuickMessage('Rajasthan desert safari adventure')">
+                                        <i class="bi bi-sun d-block mb-1"></i>
+                                        <small>Rajasthan</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-info w-100" onclick="sendQuickMessage('Goa beach and heritage tour')">
+                                        <i class="bi bi-umbrella-beach d-block mb-1"></i>
+                                        <small>Goa</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-primary w-100" onclick="sendQuickMessage('Tamil Nadu temple circuit')">
+                                        <i class="bi bi-building-fill d-block mb-1"></i>
+                                        <small>Tamil Nadu</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-secondary w-100" onclick="sendQuickMessage('Karnataka heritage and nature')">
+                                        <i class="bi bi-tree d-block mb-1"></i>
+                                        <small>Karnataka</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-dark w-100" onclick="sendQuickMessage('Mumbai and Maharashtra culture')">
+                                        <i class="bi bi-city d-block mb-1"></i>
+                                        <small>Maharashtra</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-warning w-100" onclick="sendQuickMessage('West Bengal cultural journey')">
+                                        <i class="bi bi-book d-block mb-1"></i>
+                                        <small>West Bengal</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-success w-100" onclick="sendQuickMessage('Gujarat heritage and business')">
+                                        <i class="bi bi-shop d-block mb-1"></i>
+                                        <small>Gujarat</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-info w-100" onclick="sendQuickMessage('Punjab Golden Temple pilgrimage')">
+                                        <i class="bi bi-peace d-block mb-1"></i>
+                                        <small>Punjab</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-primary w-100" onclick="sendQuickMessage('Himachal Pradesh hill stations')">
+                                        <i class="bi bi-mountain d-block mb-1"></i>
+                                        <small>Himachal</small>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="quick-category-btn btn btn-outline-danger w-100" onclick="sendQuickMessage('Spiritual journey across India')">
+                                        <i class="bi bi-heart d-block mb-1"></i>
+                                        <small>Spiritual</small>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===========================================
+                 MAIN CHAT AREA
+            =========================================== -->
+            <div class="col-lg-9">
+                <div class="card chat-container">
+                    <!-- Welcome Section -->
+                    <div class="welcome-section">
+                        <div class="row align-items-center mb-4">
+                            <div class="col-auto">
+                                <div class="ai-avatar">
+                                    <i class="bi bi-robot"></i>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <h4 class="welcome-title mb-2">Namaste! I'm your Advanced India Heritage Assistant</h4>
+                                <p class="welcome-subtitle mb-0">I provide personalized travel planning, detailed cultural insights, and intelligent recommendations based on your preferences!</p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Action Cards -->
+                        <div class="row g-3">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="action-card text-center" onclick="sendQuickMessage('Create a personalized 10-day India itinerary')">
+                                    <div class="action-icon">🗺️</div>
+                                    <div class="action-title">Custom Itinerary</div>
+                                    <div class="action-subtitle">Personalized planning</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="action-card text-center" onclick="sendQuickMessage('Tell me about UNESCO World Heritage Sites in India')">
+                                    <div class="action-icon">🏛️</div>
+                                    <div class="action-title">Heritage Sites</div>
+                                    <div class="action-subtitle">UNESCO & monuments</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="action-card text-center" onclick="sendQuickMessage('Indian festival calendar and cultural significance')">
+                                    <div class="action-icon">🎉</div>
+                                    <div class="action-title">Festivals</div>
+                                    <div class="action-subtitle">Cultural celebrations</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="action-card text-center" onclick="sendQuickMessage('Regional cuisine guide with restaurant recommendations')">
+                                    <div class="action-icon">🍛</div>
+                                    <div class="action-title">Cuisine Guide</div>
+                                    <div class="action-subtitle">Food & restaurants</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Messages Area -->
+                    <div id="messagesArea" class="messages-area">
+                        <!-- Messages will be dynamically added here -->
+                    </div>
+
+                    <!-- Input Section -->
+                    <div class="input-section">
+                        <div class="row align-items-end mb-3">
+                            <div class="col">
+                                <div class="position-relative">
+                                    <textarea 
+                                        id="messageInput" 
+                                        class="form-control message-input pe-5" 
+                                        placeholder="Ask me anything about Indian heritage, culture, travel planning, or get personalized recommendations... You can write longer messages here!"
+                                        maxlength="1000"
+                                        rows="4"
+                                        onkeypress="handleKeyPress(event)"
+                                    ></textarea>
+                                    <span id="inputCounter" class="char-counter">0/1000</span>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <button 
+                                    onclick="sendMessage()" 
+                                    id="sendButton"
+                                    class="btn send-btn"
+                                >
+                                    <i class="bi bi-send me-2"></i>Send
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quick Response Buttons -->
+                        <div id="quickResponses" class="d-flex flex-wrap">
+                            <!-- Dynamic quick responses will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- ===========================================
+         JAVASCRIPT FUNCTIONALITY
+    =========================================== -->
+    <script>
+        // ===========================================
+        // KNOWLEDGE BASE
+        // ===========================================
+        const advancedIndiaKnowledgeBase = {
+            monuments: {
+                'taj mahal': {
+                    info: "The Taj Mahal, located in Agra, Uttar Pradesh, is an ivory-white marble mausoleum commissioned in 1632 by Mughal emperor Shah Jahan to house the tomb of his favorite wife, Mumtaz Mahal. This UNESCO World Heritage Site represents the finest example of Mughal architecture, combining elements from Islamic, Persian, Ottoman Turkish and Indian architectural styles.",
+                    architecture: "The main dome is 35 meters high, surrounded by four smaller domes. The four minarets are 40 meters tall and lean slightly outward to prevent collapse onto the tomb in case of earthquake. The building uses optical illusions - the minarets appear straight but actually lean outward.",
+                    travel: "Best visited during sunrise (6:00-6:30 AM) or sunset for golden hour photography. Entry fees: Indians ₹50, Foreigners ₹1100. Closed on Fridays. Night viewing available on full moon nights (₹750 for Indians, ₹1100 for foreigners).",
+                    tips: "Book tickets online at asi.payumoney.com. No photography inside main tomb. Security is strict - no food, tobacco, or large bags allowed. Wear shoe covers or remove shoes inside. Visit duration: 2-3 hours minimum.",
+                    nearby: "Agra Fort (2.5 km), Mehtab Bagh (sunset view), Itmad-ud-Daulah (Baby Taj), Fatehpur Sikri (40 km). Stay in Agra for 2 days minimum.",
+                    history: "Construction took 22 years (1632-1654) with 20,000 workers. Cost approximately 32 million rupees (₹70 billion today). The main architect was Ustad Ahmad Lahauri."
+                },
+                'red fort': {
+                    info: "The Red Fort (Lal Qila) in Delhi served as the main residence of the Mughal emperors for nearly 200 years until 1857. Built by Shah Jahan between 1638-1648, it represents the zenith of Mughal creativity. The fort's red sandstone walls stretch for 2.41 km and vary in height from 18-33 meters.",
+                    architecture: "The fort contains palaces, audience halls, and mosques. Key structures include Diwan-i-Aam (Hall of Public Audience), Diwan-i-Khas (Hall of Private Audience), Rang Mahal (Palace of Colors), and Moti Masjid (Pearl Mosque).",
+                    travel: "Open Tuesday-Sunday, 9:30 AM-4:30 PM. Entry: Indians ₹35, Foreigners ₹550. Sound & Light Show: Hindi (7:30 PM), English (9:00 PM). Metro: Lal Qila station on Violet Line.",
+                    tips: "Allow 3-4 hours for complete visit. Audio guide available in multiple languages. Photography allowed in most areas. Best combined with Jama Masjid and Chandni Chowk visit.",
+                    significance: "Site of India's Independence Day celebrations since 1947. Prime Minister hoists the national flag here every August 15th. Symbol of India's struggle for independence."
+                }
+            },
+            
+            states: {
+                'rajasthan': {
+                    overview: "Rajasthan, the 'Land of Kings', is India's largest state covering 342,239 sq km. Home to the Thar Desert, magnificent palaces, and vibrant culture. Population: 68 million. Capital: Jaipur.",
+                    cities: {
+                        jaipur: "Pink City, founded in 1727 by Maharaja Sawai Jai Singh II. UNESCO World Heritage City. Must-visit: Amber Fort, City Palace, Hawa Mahal, Jantar Mantar. Famous for jewelry, textiles, and handicrafts.",
+                        udaipur: "City of Lakes, founded in 1559. Known for Lake Palace, City Palace, Jagdish Temple. Romantic destination with stunning architecture. Best time: October-March.",
+                        jodhpur: "Blue City, founded in 1459. Dominated by Mehrangarh Fort (one of India's largest forts). Famous for blue-painted houses in old city. Gateway to Thar Desert.",
+                        jaisalmer: "Golden City, founded in 1156. Living fort with people still residing inside. Famous for camel safaris, sand dunes, and golden sandstone architecture.",
+                        pushkar: "Holy city with sacred Pushkar Lake and Brahma Temple (one of few in world). Famous for annual Camel Fair. Vegetarian city with spiritual atmosphere.",
+                        mount_abu: "Only hill station in Rajasthan. Dilwara Jain Temples with intricate marble carvings. Cool climate, Nakki Lake. Popular summer retreat.",
+                        bikaner: "Desert city famous for Junagarh Fort, camel breeding farm, and Bikaneri bhujia snacks. Rich Rajput heritage and havelis.",
+                        ajmer: "Sufi pilgrimage center with Ajmer Sharif Dargah. Gateway to Pushkar. Blend of Hindu and Islamic culture."
+                    },
+                    culture: "Rich tradition of folk music (Manganiyar, Langa communities), dance (Ghoomar, Kalbeliya), art (miniature paintings, block printing), and crafts (jewelry, textiles, pottery). Rajasthani language widely spoken.",
+                    festivals: "Pushkar Camel Fair (November), Desert Festival Jaisalmer (February), Teej (August), Gangaur (March-April), Kite Festival (January 14).",
+                    cuisine: "Dal Baati Churma (signature dish), Laal Maas (spicy mutton curry), Ghevar (sweet), Pyaaz Kachori, Mirchi Bada, Mawa Kachori. Thali culture prevalent.",
+                    travel: "Best time: October-March. Summer temperatures can reach 50°C. Monsoon: July-September (light rainfall). Desert safari best in winter months."
+                },
+                'kerala': {
+                    overview: "Kerala, 'God's Own Country', is India's southwestern coastal state. 100% literacy rate, highest Human Development Index in India. Known for backwaters, Ayurveda, spices, and natural beauty.",
+                    cities: {
+                        kochi: "Commercial capital and major port city. Chinese fishing nets, Fort Kochi colonial architecture, spice markets. Gateway to Kerala backwaters.",
+                        thiruvananthapuram: "Capital city with Padmanabhaswamy Temple, beaches, and museums. Kovalam beach nearby. IT hub of Kerala.",
+                        munnar: "Hill station famous for tea plantations, cool climate, and scenic beauty. Eravikulam National Park, tea museums.",
+                        alleppey: "Venice of East, backwater capital. Houseboat cruises, Nehru Trophy Boat Race. Network of canals and lagoons.",
+                        wayanad: "Hill district with wildlife sanctuaries, spice plantations, and tribal culture. Chembra Peak, Edakkal Caves.",
+                        thekkady: "Home to Periyar Wildlife Sanctuary. Spice plantations, elephant rides, bamboo rafting. Cool mountain climate.",
+                        varkala: "Cliff beach with natural springs. Ayurvedic treatments, yoga centers. Spiritual and beach destination combined.",
+                        kumarakom: "Backwater destination on Vembanad Lake. Bird sanctuary, luxury resorts, traditional Kerala architecture."
+                    },
+                    culture: "Classical arts: Kathakali (dance-drama), Mohiniyattam (classical dance), Kalaripayattu (martial art). Theyyam ritual art in North Kerala. High Christian and Muslim populations alongside Hindus.",
+                    ayurveda: "Authentic Ayurvedic treatments available. Panchakarma therapy popular. Certified centers: Kairali, Somatheeram, Kalari Kovilakom. Treatment duration: 7-21 days typical.",
+                    cuisine: "Coconut-based cuisine. Sadhya (vegetarian feast on banana leaf), Fish Curry, Appam with Stew, Puttu, Kerala Parotta, Beef Fry, Karimeen Fish. Spice markets in Kochi."
+                },
+                'goa': {
+                    overview: "India's smallest state by area, former Portuguese colony. Famous for beaches, nightlife, colonial architecture, and laid-back lifestyle. Capital: Panaji. Population: 1.5 million.",
+                    cities: {
+                        panaji: "Capital city with Portuguese colonial architecture. Fontainhas Latin Quarter, churches, riverside promenades. Cultural hub.",
+                        old_goa: "Former Portuguese capital, UNESCO World Heritage Site. Basilica of Bom Jesus, Se Cathedral. Rich colonial history.",
+                        margao: "Commercial center of South Goa. Traditional markets, colonial mansions, gateway to southern beaches.",
+                        mapusa: "Market town famous for Friday market. Gateway to North Goa beaches. Local Goan culture and cuisine.",
+                        vasco: "Port city with naval base. Mormugao Port, beaches, and industrial center. Airport location."
+                    },
+                    beaches: {
+                        north: "Baga, Calangute (crowded, nightlife), Anjuna (flea market, trance parties), Arambol (hippie culture, cliffs), Morjim (turtle nesting).",
+                        south: "Palolem (crescent beach, peaceful), Agonda (pristine, less crowded), Colva (popular, water sports), Benaulim (fishing village charm)."
+                    },
+                    culture: "Unique blend of Indian and Portuguese cultures. Konkani language, Catholic festivals, fado music influence. Susegad (relaxed lifestyle) philosophy.",
+                    cuisine: "Fish curry rice, Bebinca (dessert), Sorpotel, Xacuti, Feni (local liquor), Prawn Balchao. Portuguese-influenced dishes.",
+                    festivals: "Carnival (February/March), Shigmo (Holi), Christmas celebrations, Feast of St. Francis Xavier."
+                },
+                'tamil_nadu': {
+                    overview: "South Indian state known for Dravidian culture, ancient temples, classical arts. Capital: Chennai. Rich literary tradition and temple architecture.",
+                    cities: {
+                        chennai: "Capital and major port city. Marina Beach, Kapaleeshwarar Temple, Fort St. George. IT and automobile hub.",
+                        madurai: "Temple city with Meenakshi Amman Temple. 2500-year history, cultural capital of Tamil Nadu.",
+                        thanjavur: "Ancient Chola capital. Brihadeeswarar Temple (UNESCO site), Tanjore paintings, classical music center.",
+                        kanchipuram: "City of thousand temples, silk sarees. One of seven sacred cities in Hinduism. Ekambareswarar Temple.",
+                        coimbatore: "Manchester of South India. Textile hub, pleasant climate, gateway to hill stations like Ooty.",
+                        tiruchirappalli: "Rock Fort Temple, Srirangam Temple complex. Central Tamil Nadu's cultural and educational center.",
+                        salem: "Steel city surrounded by hills. Yercaud hill station nearby. Industrial and agricultural center.",
+                        vellore: "Vellore Fort, medical college town. Historical significance and educational hub."
+                    },
+                    culture: "Dravidian heritage, Tamil literature, Bharatanatyam dance, Carnatic music. Strong temple traditions and classical arts.",
+                    cuisine: "Rice-based meals, Sambar, Rasam, Chettinad cuisine, Dosa varieties, Filter coffee. Banana leaf meals traditional.",
+                    temples: "Dravidian architecture with towering gopurams. Meenakshi Temple, Brihadeeswarar, Rameswaram, Kanyakumari temples."
+                },
+                'karnataka': {
+                    overview: "South Indian state with diverse geography from coast to hills. Rich history of kingdoms like Vijayanagara, Mysore. Capital: Bengaluru.",
+                    cities: {
+                        bengaluru: "Silicon Valley of India, IT capital. Pleasant climate, pubs, parks. Lalbagh, Cubbon Park, Tipu Sultan's Palace.",
+                        mysore: "City of Palaces, former royal capital. Mysore Palace, Chamundi Hills, silk sarees, sandalwood. Dasara festival famous.",
+                        hampi: "UNESCO World Heritage Site, ruins of Vijayanagara Empire. Boulder landscapes, ancient temples, backpacker destination.",
+                        coorg: "Coffee plantation hill station. Kodagu district, pleasant climate, homestays, trekking, wildlife.",
+                        mangalore: "Coastal city, major port. Beaches, temples, educational hub. Gateway to coastal Karnataka.",
+                        hubli: "Commercial center of North Karnataka. Cotton trading hub, educational institutions.",
+                        belgaum: "Border city with Maharashtra. Historical forts, pleasant climate, military cantonment.",
+                        hassan: "Base for Hoysala temples at Belur and Halebidu. Agricultural center with rich architectural heritage."
+                    },
+                    culture: "Kannada language and literature. Classical music, Yakshagana folk theater. Diverse traditions from different regions.",
+                    cuisine: "Bisi bele bath, Mysore pak, Dharwad peda, Mangalorean fish curry, Udupi cuisine. Coffee culture strong.",
+                    attractions: "Hoysala temples, Western Ghats, beaches, hill stations, wildlife sanctuaries, historical sites."
+                },
+                'maharashtra': {
+                    overview: "Western Indian state, economic powerhouse. Home to Bollywood, business capital Mumbai. Rich Maratha history. Capital: Mumbai.",
+                    cities: {
+                        mumbai: "Financial capital, Bollywood hub. Gateway of India, Marine Drive, Elephanta Caves. Commercial and entertainment center.",
+                        pune: "Cultural capital, IT hub. Pleasant climate, educational institutions, historical sites. Queen of Deccan.",
+                        nashik: "Wine capital, pilgrimage city. Kumbh Mela site, vineyards, temples. Religious and agricultural center.",
+                        aurangabad: "Gateway to Ajanta and Ellora Caves (UNESCO sites). Historical city with Mughal and Maratha heritage.",
+                        nagpur: "Orange city, geographical center of India. Tiger reserves nearby, educational hub.",
+                        kolhapur: "Historical city, wrestling tradition. Mahalaxmi Temple, palaces, traditional crafts.",
+                        solapur: "Textile center, agricultural hub. Historical significance, handloom industry.",
+                        satara: "Hill station, historical importance. Maratha heritage, pleasant climate, strawberry cultivation."
+                    },
+                    culture: "Marathi language and literature. Rich tradition of theater, music. Ganesh Chaturthi celebrations famous.",
+                    cuisine: "Vada pav, Misal pav, Puran poli, Modak, Bhel puri. Street food culture, especially in Mumbai.",
+                    festivals: "Ganesh Chaturthi (major), Gudi Padwa, Navratri. Lavani folk dance, Warli art traditions."
+                },
+                'west_bengal': {
+                    overview: "Eastern Indian state, cultural hub. Rich literary and artistic traditions. Capital: Kolkata. Bengali culture and intellectual heritage.",
+                    cities: {
+                        kolkata: "Cultural capital, City of Joy. Victoria Memorial, Howrah Bridge, Durga Puja. Literary and artistic center.",
+                        darjeeling: "Queen of Hills, tea gardens. Toy train (UNESCO), Himalayan views, pleasant climate.",
+                        siliguri: "Gateway to Northeast India and Bhutan. Commercial hub, tea auctions.",
+                        durgapur: "Steel city, industrial hub. Planned city with modern infrastructure.",
+                        asansol: "Coal mining center, industrial city. Railway junction, commercial importance.",
+                        kalimpong: "Hill station near Darjeeling. Orchids, monasteries, panoramic mountain views.",
+                        sundarbans: "Mangrove forests, Royal Bengal Tigers. UNESCO World Heritage Site, unique ecosystem."
+                    },
+                    culture: "Bengali literature, Rabindranath Tagore legacy. Adda (informal chat), intellectual discussions. Rich artistic traditions.",
+                    cuisine: "Fish and rice staple. Roshogolla, Sandesh, Fish curry, Hilsa fish, Mishti doi. Sweet culture prominent.",
+                    festivals: "Durga Puja (biggest), Kali Puja, Poila Boishakh (Bengali New Year). Cultural celebrations elaborate."
+                },
+                'gujarat': {
+                    overview: "Western Indian state, business hub. Mahatma Gandhi's birthplace. Rich maritime history and entrepreneurial culture. Capital: Gandhinagar.",
+                    cities: {
+                        ahmedabad: "Commercial capital, UNESCO World Heritage City. Sabarmati Ashram, textile industry, old city heritage.",
+                        surat: "Diamond and textile hub. Commercial center, Tapi river, historical significance.",
+                        vadodara: "Cultural city, Maharaja Sayajirao University. Palaces, museums, educational center.",
+                        rajkot: "Industrial city, Gandhi's early life. Automotive hub, educational institutions.",
+                        bhavnagar: "Port city, educational hub. Palitana Jain temples nearby, coastal location.",
+                        gandhinagar: "Capital city, planned urban center. Akshardham Temple, government offices.",
+                        dwarka: "Sacred city, Krishna's kingdom. Dwarkadhish Temple, pilgrimage destination, coastal beauty.",
+                        somnath: "First Jyotirlinga temple. Coastal temple, historical significance, spiritual importance."
+                    },
+                    culture: "Gujarati language, business acumen. Garba and Dandiya dance. Jain and Hindu traditions strong.",
+                    cuisine: "Vegetarian cuisine predominant. Dhokla, Khandvi, Thepla, Gujarati thali. Sweet and savory combinations.",
+                    attractions: "Rann of Kutch, Gir National Park (Asiatic lions), coastal temples, heritage cities."
+                },
+                'punjab': {
+                    overview: "Northwestern state, Sikh heartland. Agricultural prosperity, vibrant culture. Capital: Chandigarh (shared with Haryana).",
+                    cities: {
+                        amritsar: "Sikh holy city, Golden Temple. Wagah Border ceremony, Jallianwala Bagh, spiritual center.",
+                        chandigarh: "Planned city by Le Corbusier. Modern architecture, Rock Garden, clean and organized.",
+                        ludhiana: "Industrial hub, textile center. Agricultural machinery, sports goods manufacturing.",
+                        jalandhar: "Sports goods capital, educational center. Historical significance, commercial importance.",
+                        patiala: "Royal heritage, Patiala peg origin. Palaces, traditional culture, educational institutions.",
+                        bathinda: "Historical city, thermal power center. Ancient fort, agricultural hub.",
+                        mohali: "IT hub, cricket stadium. Modern development, proximity to Chandigarh."
+                    },
+                    culture: "Sikh traditions, Punjabi language. Bhangra dance, vibrant festivals. Hospitality and warmth famous.",
+                    cuisine: "Rich, butter-based cuisine. Makki di roti, Sarson da saag, Lassi, Chole bhature, Amritsari kulcha.",
+                    festivals: "Baisakhi (harvest), Guru Nanak Jayanti, Diwali. Gurdwara celebrations, community feasts."
+                },
+                'himachal_pradesh': {
+                    overview: "Northern hill state, Himalayan region. Popular tourist destination, apple orchards, adventure sports. Capital: Shimla.",
+                    cities: {
+                        shimla: "Summer capital of British India. Mall Road, toy train, colonial architecture. Queen of Hills.",
+                        manali: "Adventure sports hub, honeymoon destination. Rohtang Pass, Solang Valley, trekking base.",
+                        dharamshala: "Dalai Lama's residence, McLeod Ganj. Tibetan culture, cricket stadium, spiritual center.",
+                        dalhousie: "Colonial hill station, peaceful retreat. Churches, trekking, pleasant climate.",
+                        kasauli: "Quiet hill station, colonial charm. Monkey Point, Christ Church, nature walks.",
+                        kullu: "Valley town, adventure sports. River rafting, paragliding, Dussehra festival famous.",
+                        spiti: "Cold desert, Buddhist culture. High altitude, monasteries, unique landscape.",
+                        kinnaur: "Apple belt, Indo-Tibetan culture. Kalpa, Sangla valley, traditional architecture."
+                    },
+                    culture: "Pahari culture, Hindu and Buddhist influences. Folk music, traditional crafts, mountain lifestyle.",
+                    cuisine: "Simple mountain food. Dham (festive meal), Siddu, Chana Madra, local apples and dry fruits.",
+                    activities: "Trekking, skiing, paragliding, river rafting. Adventure tourism, nature photography."
+                }
+            },
+            
+            festivals: {
+                'diwali': {
+                    significance: "Festival of Lights celebrating victory of light over darkness, good over evil. Commemorates Lord Rama's return to Ayodhya after 14 years of exile. Also celebrates Goddess Lakshmi (wealth) and Lord Ganesha.",
+                    duration: "5-day festival: Dhanteras, Naraka Chaturdashi, Lakshmi Puja (main day), Govardhan Puja, Bhai Dooj. Usually October/November (Kartik month).",
+                    celebrations: "Lighting diyas and candles, rangoli decorations, fireworks, exchanging sweets and gifts, Lakshmi puja, cleaning and decorating homes, new clothes.",
+                    food: "Sweets: Gulab Jamun, Rasgulla, Kaju Katli, Laddu, Barfi. Savory: Samosa, Kachori, Namak Pare. Homemade and store-bought varieties.",
+                    travel: "Best places to experience: Varanasi (Ganga Aarti), Jaipur (illuminated palaces), Amritsar (Golden Temple), Mumbai (Marine Drive), Delhi (markets)."
+                },
+                'holi': {
+                    significance: "Festival of Colors celebrating spring, love, and triumph of good over evil. Based on legend of Prahlad and Holika, and Krishna-Radha love story.",
+                    celebration: "Two days: Holika Dahan (bonfire night), Rangwali Holi (color throwing day). People throw colored powder (gulal) and water at each other.",
+                    famous_locations: "Mathura-Vrindavan (Krishna's birthplace), Barsana (Lathmar Holi), Pushkar (Rajasthan), Hampi (Karnataka), Shantiniketan (Bengal).",
+                    colors: "Natural colors traditionally made from turmeric (yellow), beetroot (red), indigo (blue), henna (green). Modern synthetic colors also used.",
+                    food: "Gujiya (sweet dumplings), Thandai (spiced milk drink), Puran Poli, Dahi Bhalla, Malpua. Bhang (cannabis) traditionally consumed in some regions."
+                }
+            }
+        };
+
+        // ===========================================
+        // USER PROFILE & CONVERSATION MEMORY
+        // ===========================================
+        let userProfile = {
+            interests: [],
+            travelStyle: null,
+            budget: null,
+            languages: [],
+            previousQueries: [],
+            preferences: {}
+        };
+
+        let conversationHistory = [];
+        let recentTopics = [];
+
+        // ===========================================
+        // AI RESPONSE GENERATION
+        // ===========================================
+        function generateAdvancedAIResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            conversationHistory.push({user: userMessage, timestamp: new Date()});
+            
+            updateUserProfile(message);
+            
+            if (isItineraryRequest(message)) {
+                return generateItineraryResponse(message);
+            }
+            
+            if (isBudgetQuery(message)) {
+                return generateBudgetResponse(message);
+            }
+            
+            // Enhanced monument information
+            for (const [key, value] of Object.entries(advancedIndiaKnowledgeBase.monuments)) {
+                if (message.includes(key.replace('_', ' '))) {
+                    addToRecentTopics(key);
+                    return formatMonumentResponse(key, value);
+                }
+            }
+            
+            // Enhanced state information
+            for (const [key, value] of Object.entries(advancedIndiaKnowledgeBase.states)) {
+                if (message.includes(key)) {
+                    addToRecentTopics(key);
+                    return formatStateResponse(key, value);
+                }
+            }
+            
+            // Enhanced festival information
+            for (const [key, value] of Object.entries(advancedIndiaKnowledgeBase.festivals)) {
+                if (message.includes(key.replace('_', ' '))) {
+                    addToRecentTopics(key);
+                    return formatFestivalResponse(key, value);
+                }
+            }
+            
+            if (message.includes('food') || message.includes('cuisine')) {
+                return generateCuisineResponse(message);
+            }
+            
+            if (message.includes('plan') || message.includes('itinerary')) {
+                return generateTravelPlanningResponse(message);
+            }
+            
+            return generateIntelligentDefault(message);
+        }
+
+        function updateUserProfile(message) {
+            const interests = ['heritage', 'culture', 'adventure', 'spiritual', 'food', 'nature', 'photography'];
+            interests.forEach(interest => {
+                if (message.includes(interest) && !userProfile.interests.includes(interest)) {
+                    userProfile.interests.push(interest);
+                }
+            });
+            
+            if (message.includes('budget') || message.includes('cheap')) {
+                userProfile.budget = 'budget';
+            } else if (message.includes('luxury')) {
+                userProfile.budget = 'luxury';
+            }
+            
+            if (message.includes('family')) {
+                userProfile.travelStyle = 'family';
+            } else if (message.includes('solo')) {
+                userProfile.travelStyle = 'solo';
+            }
+            
+            updateProfileDisplay();
+        }
+
+        function updateProfileDisplay() {
+            document.getElementById('userInterests').textContent = 
+                userProfile.interests.length > 0 ? userProfile.interests.join(', ') : 'Not set';
+            document.getElementById('travelStyle').textContent = 
+                userProfile.travelStyle || 'Not set';
+            document.getElementById('budgetRange').textContent = 
+                userProfile.budget || 'Not set';
+        }
+
+        function addToRecentTopics(topic) {
+            if (!recentTopics.includes(topic)) {
+                recentTopics.unshift(topic);
+                if (recentTopics.length > 5) recentTopics.pop();
+                updateRecentTopicsDisplay();
+            }
+        }
+
+        function updateRecentTopicsDisplay() {
+            const container = document.getElementById('recentTopics');
+            if (recentTopics.length === 0) {
+                container.innerHTML = '<p class="text-muted small mb-0">No recent conversations</p>';
+                return;
+            }
+            
+            container.innerHTML = recentTopics.map(topic => 
+                `<div class="recent-topic" onclick="sendQuickMessage('Tell me more about ${topic.replace('_', ' ')}')">${topic.replace('_', ' ').toUpperCase()}</div>`
+            ).join('');
+        }
+
+        // ===========================================
+        // RESPONSE FORMATTERS
+        // ===========================================
+        function formatMonumentResponse(key, monument) {
+            return `<div class="mb-3">
+                <h5 class="text-primary mb-3"><i class="bi bi-building me-2"></i>${key.toUpperCase().replace('_', ' ')}</h5>
+                
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-info-circle me-2"></i>Overview</h6>
+                    <p class="text-muted">${monument.info}</p>
+                </div>
+                
+                ${monument.architecture ? `
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-tools me-2"></i>Architecture</h6>
+                    <p class="text-muted">${monument.architecture}</p>
+                </div>` : ''}
+                
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-ticket me-2"></i>Visitor Information</h6>
+                    <p class="text-muted">${monument.travel}</p>
+                </div>
+                
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-lightbulb me-2"></i>Pro Tips</h6>
+                    <p class="text-muted">${monument.tips}</p>
+                </div>
+                
+                ${monument.nearby ? `
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-geo-alt me-2"></i>Nearby Attractions</h6>
+                    <p class="text-muted">${monument.nearby}</p>
+                </div>` : ''}
+            </div>
+            
+            <p class="text-primary">Would you like me to help you plan a visit or tell you about nearby attractions?</p>`;
+        }
+
+        function formatStateResponse(key, state) {
+            let response = `<div class="mb-3">
+                <h5 class="text-primary mb-3"><i class="bi bi-map me-2"></i>${key.toUpperCase()}</h5>
+                
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-star me-2"></i>Overview</h6>
+                    <p class="text-muted">${state.overview}</p>
+                </div>`;
+
+            if (state.cities) {
+                response += `<div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-buildings me-2"></i>Major Destinations</h6>`;
+                for (const [city, info] of Object.entries(state.cities)) {
+                    response += `<div class="mb-2">
+                        <strong class="text-primary">${city.charAt(0).toUpperCase() + city.slice(1)}:</strong>
+                        <span class="text-muted">${info}</span>
+                    </div>`;
+                }
+                response += `</div>`;
+            }
+
+            response += `
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-palette me-2"></i>Culture & Traditions</h6>
+                    <p class="text-muted">${state.culture}</p>
+                </div>
+                
+                ${state.festivals ? `
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-calendar-event me-2"></i>Festivals</h6>
+                    <p class="text-muted">${state.festivals}</p>
+                </div>` : ''}
+                
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-cup-hot me-2"></i>Cuisine</h6>
+                    <p class="text-muted">${state.cuisine}</p>
+                </div>
+            </div>
+            
+            <p class="text-primary">Would you like a detailed itinerary for ${key} or information about specific cities?</p>`;
+
+            return response;
+        }
+
+        function formatFestivalResponse(key, festival) {
+            return `<div class="mb-3">
+                <h5 class="text-primary mb-3"><i class="bi bi-calendar-heart me-2"></i>${key.toUpperCase().replace('_', ' ')}</h5>
+                
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-heart me-2"></i>Significance</h6>
+                    <p class="text-muted">${festival.significance}</p>
+                </div>
+                
+                ${festival.duration ? `
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-calendar me-2"></i>Duration & Timing</h6>
+                    <p class="text-muted">${festival.duration}</p>
+                </div>` : ''}
+                
+                ${festival.celebration || festival.celebrations ? `
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-party-hat me-2"></i>Celebrations</h6>
+                    <p class="text-muted">${festival.celebration || festival.celebrations}</p>
+                </div>` : ''}
+                
+                ${festival.food ? `
+                <div class="mb-3">
+                    <h6 class="text-dark"><i class="bi bi-cup-hot me-2"></i>Festival Foods</h6>
+                    <p class="text-muted">${festival.food}</p>
+                </div>` : ''}
+            </div>
+            
+            <p class="text-primary">Would you like me to help you plan a trip during this festival or tell you about other Indian festivals?</p>`;
+        }
+
+        function generateItineraryResponse(message) {
+            const days = extractDays(message);
+            return `<div class="mb-3">
+                <h5 class="text-primary mb-3"><i class="bi bi-map me-2"></i>PERSONALIZED ${days}-DAY INDIA ITINERARY</h5>
+                
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle me-2"></i>
+                    Based on your preferences, here's a customized itinerary:
+                </div>
+                
+                <div class="mb-3">
+                    <h6 class="text-dark">Day 1-2: Delhi</h6>
+                    <ul class="text-muted">
+                        <li>Red Fort & Jama Masjid (Heritage)</li>
+                        <li>India Gate & Raj Ghat (History)</li>
+                        <li>Humayun's Tomb (Architecture)</li>
+                        <li>Chandni Chowk food tour (Cuisine)</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-3">
+                    <h6 class="text-dark">Day 3-4: Agra</h6>
+                    <ul class="text-muted">
+                        <li>Taj Mahal at sunrise (UNESCO Site)</li>
+                        <li>Agra Fort (Mughal Architecture)</li>
+                        <li>Mehtab Bagh (Sunset views)</li>
+                        <li>Local handicraft shopping</li>
+                    </ul>
+                </div>
+                
+                <div class="mb-3">
+                    <h6 class="text-dark">Day 5-${days}: Jaipur</h6>
+                    <ul class="text-muted">
+                        <li>Amber Fort & Palace (Royal Heritage)</li>
+                        <li>City Palace & Hawa Mahal</li>
+                        <li>Jantar Mantar (Astronomy)</li>
+                        <li>Local markets & cultural shows</li>
+                    </ul>
+                </div>
+                
+                <div class="alert alert-success">
+                    <h6 class="text-dark"><i class="bi bi-wallet me-2"></i>Budget Estimate (per person):</h6>
+                    <ul class="mb-0">
+                        <li>Budget: ₹${2000 * days}-${3000 * days}</li>
+                        <li>Mid-range: ₹${5000 * days}-${8000 * days}</li>
+                        <li>Luxury: ₹${15000 * days}+</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p class="text-primary">Would you like me to customize this further based on specific interests or extend it to other regions?</p>`;
+        }
+
+        function generateIntelligentDefault(message) {
+            const isGreeting = message.includes('hello') || message.includes('hi') || message.includes('namaste');
+            
+            if (isGreeting) {
+                return `<div class="mb-3">
+                    <h5 class="text-primary mb-3"><i class="bi bi-hand-wave me-2"></i>Namaste and Welcome!</h5>
+                    
+                    <p class="text-muted mb-3">I'm your advanced AI assistant for exploring India's incredible heritage and culture. I can help you with:</p>
+                    
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-building text-primary me-2"></i>
+                                <strong>Detailed Heritage Information</strong>
+                            </div>
+                            <small class="text-muted">UNESCO sites, monuments, architecture</small>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-map text-primary me-2"></i>
+                                <strong>Personalized Travel Planning</strong>
+                            </div>
+                            <small class="text-muted">Custom itineraries based on preferences</small>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-palette text-primary me-2"></i>
+                                <strong>Cultural Insights</strong>
+                            </div>
+                            <small class="text-muted">Festivals, traditions, local customs</small>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="bi bi-cup-hot text-primary me-2"></i>
+                                <strong>Culinary Guidance</strong>
+                            </div>
+                            <small class="text-muted">Regional cuisines, restaurant recommendations</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-primary">What aspect of India would you like to explore first? I'll provide detailed, personalized information to make your journey unforgettable!</p>`;
+            }
+            
+            return `<div class="mb-3">
+                <h5 class="text-primary mb-3"><i class="bi bi-question-circle me-2"></i>I'd love to help you explore India!</h5>
+                
+                <p class="text-muted mb-3">I have extensive knowledge about:</p>
+                
+                <div class="row g-2 mb-3">
+                    <div class="col-md-4">
+                        <div class="badge bg-light text-dark w-100 p-2">
+                            <i class="bi bi-building me-1"></i>Heritage & Monuments
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="badge bg-light text-dark w-100 p-2">
+                            <i class="bi bi-map me-1"></i>States & Regions
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="badge bg-light text-dark w-100 p-2">
+                            <i class="bi bi-calendar-event me-1"></i>Festivals & Culture
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-primary">What would you like to know about incredible India? Be as specific as you'd like - I provide detailed, personalized responses!</p>`;
+        }
+
+        // ===========================================
+        // HELPER FUNCTIONS
+        // ===========================================
+        function extractDays(message) {
+            const match = message.match(/(\d+)\s*day/i);
+            return match ? parseInt(match[1]) : 7;
+        }
+
+        function isItineraryRequest(message) {
+            return message.includes('itinerary') || message.includes('plan') || 
+                   (message.includes('day') && message.includes('tour'));
+        }
+
+        function isBudgetQuery(message) {
+            return message.includes('cost') || message.includes('budget') || message.includes('price');
+        }
+
+        function generateCuisineResponse(message) {
+            return `<div class="mb-3">
+                <h5 class="text-primary mb-3"><i class="bi bi-cup-hot me-2"></i>INDIAN CUISINE GUIDE</h5>
+                
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-dark">North Indian</h6>
+                                <p class="card-text small text-muted">Rich, creamy curries with wheat-based breads. Famous dishes: Butter Chicken, Dal Makhani, Naan, Biryani.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-dark">South Indian</h6>
+                                <p class="card-text small text-muted">Rice-based cuisine with coconut and spices. Famous dishes: Dosa, Idli, Sambar, Fish Curry.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-primary">Would you like specific restaurant recommendations or cooking class information?</p>`;
+        }
+
+        function generateTravelPlanningResponse(message) {
+            return `<div class="mb-3">
+                <h5 class="text-primary mb-3"><i class="bi bi-airplane me-2"></i>TRAVEL PLANNING FOR INDIA</h5>
+                
+                <div class="alert alert-info">
+                    <h6 class="text-dark"><i class="bi bi-info-circle me-2"></i>Essential Travel Tips</h6>
+                    <ul class="mb-0 small">
+                        <li><strong>Best Time:</strong> October to March for most regions</li>
+                        <li><strong>Visa:</strong> Most visitors need an e-Visa or regular visa</li>
+                        <li><strong>Currency:</strong> Indian Rupee (INR)</li>
+                        <li><strong>Languages:</strong> Hindi and English widely spoken</li>
+                        <li><strong>Transport:</strong> Trains, buses, and domestic flights</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <p class="text-primary">Which specific region or city would you like to know more about?</p>`;
+        }
+
+        // ===========================================
+        // UI FUNCTIONS
+        // ===========================================
+        function addMessage(content, isUser = false) {
+            const messagesArea = document.getElementById('messagesArea');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `d-flex ${isUser ? 'justify-content-end' : 'justify-content-start'} mb-3`;
+            
+            const bubbleClass = isUser ? 'message-user' : 'message-ai';
+            
+            messageDiv.innerHTML = `
+                <div class="message-bubble ${bubbleClass}">
+                    <div class="message-content">${content}</div>
+                    <div class="message-time">
+                        <span>${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        ${!isUser ? '<span><i class="bi bi-robot"></i> AI Assistant</span>' : ''}
+                    </div>
+                </div>
+            `;
+            
+            messagesArea.appendChild(messageDiv);
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+            
+            if (!isUser) {
+                updateQuickResponses(content);
+            }
+        }
+
+        function updateQuickResponses(lastAIMessage) {
+            const quickResponses = document.getElementById('quickResponses');
+            const responses = [];
+            
+            if (lastAIMessage.includes('itinerary')) {
+                responses.push('Customize this itinerary', 'Add more destinations');
+            } else if (lastAIMessage.includes('monument')) {
+                responses.push('Plan a visit here', 'Nearby attractions');
+            } else {
+                responses.push('Tell me more', 'Plan a trip');
+            }
+            
+            responses.push('Budget information', 'Best time to visit');
+            
+            quickResponses.innerHTML = responses.map(response => 
+                `<button class="quick-response-btn" onclick="sendQuickMessage('${response}')">${response}</button>`
+            ).join('');
+        }
+
+        function showTypingIndicator() {
+            const messagesArea = document.getElementById('messagesArea');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'd-flex justify-content-start mb-3';
+            typingDiv.innerHTML = `
+                <div class="typing-indicator">
+                    <div class="d-flex align-items-center">
+                        <div class="typing-dots me-2">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                        <small class="text-muted">AI is thinking...</small>
+                    </div>
+                </div>
+            `;
+            messagesArea.appendChild(typingDiv);
+            messagesArea.scrollTop = messagesArea.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            addMessage(message, true);
+            input.value = '';
+            updateCharCounter();
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                removeTypingIndicator();
+                const aiResponse = generateAdvancedAIResponse(message);
+                addMessage(aiResponse);
+            }, 2000 + Math.random() * 1000);
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('messageInput').value = message;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        function updateCharCounter() {
+            const input = document.getElementById('messageInput');
+            const counter = document.getElementById('inputCounter');
+            const length = input.value.length;
+            counter.textContent = `${length}/1000`;
+            
+            if (length > 900) {
+                counter.classList.add('text-danger');
+            } else {
+                counter.classList.remove('text-danger');
+            }
+        }
+
+        // ===========================================
+        // EVENT LISTENERS & INITIALIZATION
+        // ===========================================
+        document.getElementById('messageInput').addEventListener('input', updateCharCounter);
+
+        window.addEventListener('load', function() {
+            document.getElementById('messageInput').focus();
+            
+            setTimeout(() => {
+                addMessage(`<div class="mb-3">
+                    <h5 class="text-light mb-3"><i class="bi bi-hand-wave me-2"></i>Welcome to India Heritage AI Pro!</h5>
+                    <p class="mb-0">I'm your advanced cultural and travel assistant. I can create personalized itineraries, provide detailed heritage information, and offer intelligent recommendations based on your preferences. What would you like to explore about incredible India?</p>
+                </div>`);
+            }, 1000);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97bdc37f40403e27',t:'MTc1NzMyNzM1NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+
+</body>
+</html>

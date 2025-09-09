@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Heritage Interactive Map - Standalone Version</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <!-- Title Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f7f9fc;
+            color: #2a2f36;
+        }
+        
+        .header {
+            background: #ffffff;
+            backdrop-filter: blur(6px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(23, 26, 31, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-weight: 800;
+            margin: 0;
+            text-align: center;
+            font-family: 'Playfair Display', Georgia, serif;
+            letter-spacing: 0.3px;
+        }
+        
+        .map-container {
+            height: 100vh;
+            position: relative;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .map-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #ffffff;
+            border: 1px solid #e6ebf1;
+            padding: 14px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(23, 26, 31, 0.08);
+        }
+        
+        .control-btn {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px 14px;
+            border: 1px solid #e6ebf1;
+            border-radius: 10px;
+            background: #f0f5ff;
+            color: #2a2f36;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(23, 26, 31, 0.08);
+            background: #e7f0ff;
+        }
+
+        .control-btn:nth-child(1) { background: #eef7ff; border-color: #cfe3ff; }
+        .control-btn:nth-child(2) { background: #fef3f2; border-color: #ffd9d5; }
+        .control-btn:nth-child(3) { background: #f5f8ff; border-color: #d7e0ff; }
+        .control-btn:nth-child(4) { background: #f3f9f4; border-color: #cfead6; }
+
+        .control-btn:nth-child(1):hover { background: #e3f0ff; }
+        .control-btn:nth-child(2):hover { background: #ffeae7; }
+        .control-btn:nth-child(3):hover { background: #edf2ff; }
+        .control-btn:nth-child(4):hover { background: #e9f5ec; }
+        
+        .side-panel {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 420px;
+            height: 100vh;
+            background: #ffffff;
+            box-shadow: -12px 0 28px rgba(23, 26, 31, 0.06);
+            transition: right 0.28s ease;
+            z-index: 1001;
+            overflow-y: auto;
+            border-left: 1px solid #eef2f7;
+        }
+        
+        .side-panel.open {
+            right: 0;
+        }
+        
+        .panel-content {
+            padding: 20px 22px;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ffffff;
+            border: 1px solid #e6ebf1;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            font-size: 22px;
+            cursor: pointer;
+            color: #556070;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 2px 8px rgba(23,26,31,0.06);
+        }
+        .close-btn:hover { background: #f5f7fb; }
+        
+        .city-title {
+            color: #2c3e50;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .city-subtitle {
+            color: #7f8c8d;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .image-carousel {
+            margin-bottom: 20px;
+        }
+        
+        .swiper-slide img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .info-section {
+            margin-bottom: 20px;
+            background: #ffffff;
+            border: 1px solid #eef2f7;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 6px 16px rgba(23,26,31,0.04);
+        }
+        
+        .info-section h4 {
+            color: #1f2937;
+            font-size: 16px;
+            margin: 0 0 12px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #eef2f7;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 6px 0;
+            border-bottom: 1px dashed #e9edf3;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        .info-value {
+            color: #7f8c8d;
+        }
+        
+        .heritage-sites {
+            margin-top: 20px;
+        }
+        
+        .heritage-item {
+            background: #ffffff;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 14px;
+            border: 1px solid #eef2f7;
+            box-shadow: 0 4px 14px rgba(23,26,31,0.05);
+        }
+        
+        .heritage-title {
+            color: #111827;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .heritage-description {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .unesco-badge {
+            background: #fff4e5;
+            color: #9a6700;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #ffe1b3;
+        }
+        
+        .rating {
+            color: #f39c12;
+            font-weight: 600;
+        }
+        
+        .culture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .culture-item {
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #eef2f7;
+            box-shadow: 0 4px 12px rgba(23,26,31,0.04);
+        }
+        
+        .culture-item h6 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .culture-item p {
+            color: #7f8c8d;
+            font-size: 12px;
+            margin: 0;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #7f8c8d;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 50px;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .side-panel {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .map-controls {
+                top: 10px;
+                right: 10px;
+                padding: 10px;
+            }
+            
+            .control-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>🏛️ India Heritage Interactive Map</h1>
+        </div>
+    </div>
+    
+    <div class="map-container">
+        <div id="map"></div>
+        
+        <div class="map-controls">
+            <button class="control-btn" onclick="showAllCities()">📍 All Cities</button>
+            <button class="control-btn" onclick="showPopularCities()">⭐ Popular Cities</button>
+            <button class="control-btn" onclick="showUnescoSites()">🏆 UNESCO Sites</button>
+            <button class="control-btn" onclick="resetMap()">🔄 Reset View</button>
+        </div>
+    </div>
+    
+    <div class="side-panel" id="sidePanel">
+        <button class="close-btn" onclick="closeSidePanel()">&times;</button>
+        <div class="panel-content" id="panelContent">
+            <div class="loading">Loading city information...</div>
+        </div>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Enhanced India Heritage Data
+        const citiesData = [
+            // NORTH INDIA
+            {
+                id: 1,
+                name: "Delhi",
+                state: "Delhi",
+                latitude: 28.6139,
+                longitude: 77.2090,
+                description: "The capital of India, Delhi is a city where ancient and modern India coexist. It's home to numerous UNESCO World Heritage Sites and serves as the political center of the country.",
+                population: "32.9 million",
+                founded: "736 AD",
+                famous_for: "Red Fort,Qutub Minar,India Gate,Lotus Temple,Political Center",
+                tourism_rating: 5.0,
+                is_popular: true,
+                region: "North India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Red Fort, Delhi", alt_text: "Red Fort Delhi" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Qutub Minar, Delhi", alt_text: "Qutub Minar Delhi" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "India Gate, Delhi", alt_text: "India Gate Delhi" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Eid,Christmas",
+                    cuisine: "Chole Bhature,Butter Chicken,Naan,Chaat",
+                    art_forms: "Classical Music,Dance,Handicrafts",
+                    music: "Classical Music,Folk Music,Gazal"
+                },
+                heritage_sites: [
+                    {
+                        id: 1,
+                        name: "Red Fort",
+                        description: "A magnificent fort built by the Mughal emperor Shah Jahan, now a UNESCO World Heritage Site.",
+                        category: "Fort",
+                        history: "Built in 1639 by Shah Jahan as the main residence of the Mughal emperors.",
+                        significance: "UNESCO World Heritage Site and symbol of Mughal power",
+                        visiting_hours: "9:30 AM - 4:30 PM",
+                        entry_fee: "₹35 for Indians, ₹500 for foreigners",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "Jama Masjid,Chandni Chowk",
+                        tags: "Mughal,Fort,UNESCO",
+                        is_unesco: true,
+                        rating: 4.8,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Red Fort", alt_text: "Red Fort Delhi" }
+                        ]
+                    },
+                    {
+                        id: 2,
+                        name: "Qutub Minar",
+                        description: "The tallest brick minaret in the world, built in the 12th century.",
+                        category: "Monument",
+                        history: "Built in 1193 by Qutub-ud-din Aibak, the first Sultan of Delhi.",
+                        significance: "UNESCO World Heritage Site and architectural marvel",
+                        visiting_hours: "7:00 AM - 5:00 PM",
+                        entry_fee: "₹30 for Indians, ₹500 for foreigners",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "Iron Pillar,Quwwat-ul-Islam Mosque",
+                        tags: "Islamic,Minaret,UNESCO",
+                        is_unesco: true,
+                        rating: 4.7,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Qutub Minar", alt_text: "Qutub Minar Delhi" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: "Mumbai",
+                state: "Maharashtra",
+                latitude: 19.0760,
+                longitude: 72.8777,
+                description: "The financial capital of India, Mumbai is a bustling metropolis known for Bollywood, Gateway of India, and its vibrant street food culture.",
+                population: "20.4 million",
+                founded: "1507 AD",
+                famous_for: "Bollywood,Gateway of India,Marine Drive,Street Food,Financial Center",
+                tourism_rating: 5.0,
+                is_popular: true,
+                region: "West India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Gateway of India, Mumbai", alt_text: "Gateway of India Mumbai" },
+                    { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Marine Drive, Mumbai", alt_text: "Marine Drive Mumbai" },
+                    { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Bollywood, Mumbai", alt_text: "Bollywood Mumbai" }
+                ],
+                culture: {
+                    festivals: "Ganesh Chaturthi,Diwali,Holi,Eid",
+                    cuisine: "Vada Pav,Pav Bhaji,Bhel Puri,Seafood",
+                    art_forms: "Bollywood,Contemporary Art,Street Art",
+                    music: "Bollywood Music,Classical Music,Indie Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 3,
+                        name: "Gateway of India",
+                        description: "An iconic monument built during the British Raj, serving as the ceremonial entrance to India.",
+                        category: "Monument",
+                        history: "Built in 1924 to commemorate the visit of King George V and Queen Mary to India in 1911.",
+                        significance: "Symbol of Mumbai and colonial architecture",
+                        visiting_hours: "24 hours",
+                        entry_fee: "Free",
+                        best_time_to_visit: "Evening for lighting",
+                        nearby_attractions: "Taj Mahal Palace Hotel,Elephanta Caves,Colaba Causeway",
+                        tags: "Colonial,Iconic,Historic",
+                        is_unesco: false,
+                        rating: 5.0,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Gateway of India", alt_text: "Gateway of India Mumbai" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: "Agra",
+                state: "Uttar Pradesh",
+                latitude: 27.1767,
+                longitude: 78.0081,
+                description: "Home to the iconic Taj Mahal, Agra is one of India's most visited cities and a UNESCO World Heritage Site.",
+                population: "1.6 million",
+                founded: "1504 AD",
+                famous_for: "Taj Mahal,Agra Fort,Fatehpur Sikri,Mughal Architecture",
+                tourism_rating: 5.0,
+                is_popular: true,
+                region: "North India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Taj Mahal, Agra", alt_text: "Taj Mahal Agra" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Agra Fort, Agra", alt_text: "Agra Fort Agra" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Fatehpur Sikri, Agra", alt_text: "Fatehpur Sikri Agra" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Eid,Christmas",
+                    cuisine: "Agra Petha,Gajak,Dalmoth,Chaat",
+                    art_forms: "Mughal Architecture,Marble Inlay Work,Handicrafts",
+                    music: "Classical Music,Folk Music,Gazal"
+                },
+                heritage_sites: [
+                    {
+                        id: 4,
+                        name: "Taj Mahal",
+                        description: "A magnificent white marble mausoleum built by Shah Jahan in memory of his wife Mumtaz Mahal.",
+                        category: "Monument",
+                        history: "Built between 1632-1653 by Shah Jahan as a memorial to his beloved wife.",
+                        significance: "UNESCO World Heritage Site and symbol of eternal love",
+                        visiting_hours: "6:00 AM - 7:00 PM (closed on Fridays)",
+                        entry_fee: "₹50 for Indians, ₹1100 for foreigners",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "Agra Fort,Mehtab Bagh",
+                        tags: "Mughal,Love,UNESCO",
+                        is_unesco: true,
+                        rating: 5.0,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Taj Mahal", alt_text: "Taj Mahal Agra" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 4,
+                name: "Jaipur",
+                state: "Rajasthan",
+                latitude: 26.9124,
+                longitude: 75.7873,
+                description: "The Pink City, Jaipur is known for its magnificent palaces, forts, and rich cultural heritage.",
+                population: "3.1 million",
+                founded: "1727 AD",
+                famous_for: "Palaces,Forts,Pink City,Royal Heritage",
+                tourism_rating: 4.8,
+                is_popular: true,
+                region: "North India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Hawa Mahal, Jaipur", alt_text: "Hawa Mahal Jaipur" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Amber Fort, Jaipur", alt_text: "Amber Fort Jaipur" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "City Palace, Jaipur", alt_text: "City Palace Jaipur" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Gangaur,Tejaji",
+                    cuisine: "Dal Baati Churma,Ghevar,Rajasthani Thali",
+                    art_forms: "Classical Dance,Handicrafts,Music",
+                    music: "Classical Music,Folk Music,Gazal"
+                },
+                heritage_sites: [
+                    {
+                        id: 5,
+                        name: "Hawa Mahal",
+                        description: "The Palace of Winds, a beautiful palace with intricate lattice work.",
+                        category: "Palace",
+                        history: "Built in 1799 by Maharaja Sawai Pratap Singh.",
+                        significance: "UNESCO World Heritage Site and architectural marvel",
+                        visiting_hours: "9:00 AM - 4:30 PM",
+                        entry_fee: "₹50 for Indians, ₹200 for foreigners",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "City Palace,Jantar Mantar",
+                        tags: "Rajasthani,Palace,UNESCO",
+                        is_unesco: true,
+                        rating: 4.7,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Hawa Mahal", alt_text: "Hawa Mahal Jaipur" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 5,
+                name: "Varanasi",
+                state: "Uttar Pradesh",
+                latitude: 25.3176,
+                longitude: 82.9739,
+                description: "The spiritual capital of India, Varanasi is one of the oldest continuously inhabited cities in the world.",
+                population: "1.2 million",
+                founded: "11th century BC",
+                famous_for: "Ghats,Ganga Aarti,Spirituality,Temples",
+                tourism_rating: 4.8,
+                is_popular: true,
+                region: "North India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Ganga Ghats, Varanasi", alt_text: "Ganga Ghats Varanasi" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Kashi Vishwanath Temple, Varanasi", alt_text: "Kashi Vishwanath Temple Varanasi" },
+                    { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Ganga Aarti, Varanasi", alt_text: "Ganga Aarti Varanasi" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Maha Shivaratri,Ganga Dussehra",
+                    cuisine: "Banarasi Paan,Kachori Sabzi,Lassi",
+                    art_forms: "Classical Music,Dance,Handicrafts",
+                    music: "Classical Music,Folk Music,Gazal"
+                },
+                heritage_sites: [
+                    {
+                        id: 6,
+                        name: "Kashi Vishwanath Temple",
+                        description: "One of the most sacred temples dedicated to Lord Shiva, located on the banks of the Ganges.",
+                        category: "Temple",
+                        history: "Built in the 11th century, destroyed and rebuilt multiple times.",
+                        significance: "Most sacred temple of Lord Shiva and spiritual center",
+                        visiting_hours: "4:00 AM - 11:00 PM",
+                        entry_fee: "Free",
+                        best_time_to_visit: "All year round",
+                        nearby_attractions: "Ganga Ghats,Sarnath",
+                        tags: "Hindu,Temple,Sacred",
+                        is_unesco: false,
+                        rating: 4.9,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Kashi Vishwanath Temple", alt_text: "Kashi Vishwanath Temple Varanasi" }
+                        ]
+                    }
+                ]
+            },
+            // SOUTH INDIA
+            {
+                id: 6,
+                name: "Bangalore",
+                state: "Karnataka",
+                latitude: 12.9716,
+                longitude: 77.5946,
+                description: "The Silicon Valley of India, Bangalore is known for its IT industry, pleasant weather, and vibrant nightlife.",
+                population: "8.4 million",
+                founded: "1537 AD",
+                famous_for: "IT Industry,Gardens,Nightlife,Weather,Startups",
+                tourism_rating: 4.0,
+                is_popular: true,
+                region: "South India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Lalbagh Botanical Garden, Bangalore", alt_text: "Lalbagh Bangalore" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Vidhana Soudha, Bangalore", alt_text: "Vidhana Soudha Bangalore" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Cubbon Park, Bangalore", alt_text: "Cubbon Park Bangalore" }
+                ],
+                culture: {
+                    festivals: "Dasara,Diwali,Karva Chauth,Christmas",
+                    cuisine: "Masala Dosa,Idli,Filter Coffee,Bisi Bele Bath",
+                    art_forms: "Contemporary Art,Street Art,Digital Art",
+                    music: "Rock Music,Electronic Music,Classical Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 7,
+                        name: "Lalbagh Botanical Garden",
+                        description: "A beautiful botanical garden established by Hyder Ali, known for its glass house and rare plants.",
+                        category: "Garden",
+                        history: "Established in 1760 by Hyder Ali and later developed by Tipu Sultan.",
+                        significance: "Important botanical research center and tourist attraction",
+                        visiting_hours: "6:00 AM - 7:00 PM",
+                        entry_fee: "₹25 for adults",
+                        best_time_to_visit: "All year round",
+                        nearby_attractions: "Cubbon Park,Vidhana Soudha",
+                        tags: "Botanical,Garden,Historical",
+                        is_unesco: false,
+                        rating: 4.3,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Lalbagh Botanical Garden", alt_text: "Lalbagh Bangalore" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 7,
+                name: "Chennai",
+                state: "Tamil Nadu",
+                latitude: 13.0827,
+                longitude: 80.2707,
+                description: "The cultural capital of South India, Chennai is known for its temples, beaches, and classical music.",
+                population: "7.1 million",
+                founded: "1639 AD",
+                famous_for: "Marina Beach,Temples,Classical Music,Film Industry,South Indian Cuisine",
+                tourism_rating: 4.0,
+                is_popular: true,
+                region: "South India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Marina Beach, Chennai", alt_text: "Marina Beach Chennai" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Kapaleeshwarar Temple, Chennai", alt_text: "Kapaleeshwarar Temple Chennai" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Fort St. George, Chennai", alt_text: "Fort St. George Chennai" }
+                ],
+                culture: {
+                    festivals: "Pongal,Diwali,Navaratri,Tamil New Year",
+                    cuisine: "Idli,Dosa,Sambar,Coconut Chutney",
+                    art_forms: "Classical Dance,Temple Architecture,Carnatic Music",
+                    music: "Carnatic Music,Classical Dance,Folk Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 8,
+                        name: "Marina Beach",
+                        description: "The second longest urban beach in the world, known for its scenic beauty and cultural significance.",
+                        category: "Beach",
+                        history: "Developed in the 19th century as a recreational area for the British.",
+                        significance: "Important cultural and recreational landmark",
+                        visiting_hours: "24 hours",
+                        entry_fee: "Free",
+                        best_time_to_visit: "Evening",
+                        nearby_attractions: "Fort St. George,San Thome Basilica",
+                        tags: "Beach,Scenic,Cultural",
+                        is_unesco: false,
+                        rating: 4.5,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Marina Beach", alt_text: "Marina Beach Chennai" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 8,
+                name: "Hyderabad",
+                state: "Telangana",
+                latitude: 17.3850,
+                longitude: 78.4867,
+                description: "The City of Pearls, Hyderabad is known for its rich history, biryani, and the iconic Charminar.",
+                population: "6.8 million",
+                founded: "1591 AD",
+                famous_for: "Charminar,Biryani,Pearls,IT Industry,Nizam Culture",
+                tourism_rating: 4.0,
+                is_popular: true,
+                region: "South India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Charminar, Hyderabad", alt_text: "Charminar Hyderabad" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Golconda Fort, Hyderabad", alt_text: "Golconda Fort Hyderabad" },
+                    { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Hussain Sagar Lake, Hyderabad", alt_text: "Hussain Sagar Lake Hyderabad" }
+                ],
+                culture: {
+                    festivals: "Ramzan,Eid,Diwali,Bonalu",
+                    cuisine: "Hyderabadi Biryani,Haleem,Kebabs,Double Ka Meetha",
+                    art_forms: "Pearl Jewelry,Bidri Work,Kalamkari",
+                    music: "Ghazals,Qawwali,Classical Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 9,
+                        name: "Charminar",
+                        description: "An iconic monument and mosque built by Muhammad Quli Qutb Shah in 1591.",
+                        category: "Monument",
+                        history: "Built in 1591 by Muhammad Quli Qutb Shah to commemorate the end of a plague.",
+                        significance: "Symbol of Hyderabad and important architectural landmark",
+                        visiting_hours: "9:00 AM - 5:30 PM",
+                        entry_fee: "₹5 for Indians, ₹100 for foreigners",
+                        best_time_to_visit: "Evening for lighting",
+                        nearby_attractions: "Laad Bazaar,Mecca Masjid",
+                        tags: "Islamic,Iconic,Architecture",
+                        is_unesco: false,
+                        rating: 4.7,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Charminar", alt_text: "Charminar Hyderabad" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 9,
+                name: "Kochi",
+                state: "Kerala",
+                latitude: 9.9312,
+                longitude: 76.2673,
+                description: "The Queen of the Arabian Sea, Kochi is known for its backwaters, Chinese fishing nets, and colonial architecture.",
+                population: "677,000",
+                founded: "1341 AD",
+                famous_for: "Backwaters,Chinese Fishing Nets,Spice Trade,Colonial Architecture",
+                tourism_rating: 4.6,
+                is_popular: true,
+                region: "South India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Chinese Fishing Nets, Kochi", alt_text: "Chinese Fishing Nets Kochi" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Fort Kochi, Kochi", alt_text: "Fort Kochi Kochi" },
+                    { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Backwaters, Kochi", alt_text: "Backwaters Kochi" }
+                ],
+                culture: {
+                    festivals: "Onam,Vishu,Christmas,Easter",
+                    cuisine: "Kerala Sadya,Appam,Stew,Seafood",
+                    art_forms: "Kathakali,Mohiniyattam,Theyyam",
+                    music: "Carnatic Music,Folk Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 10,
+                        name: "Chinese Fishing Nets",
+                        description: "Unique fishing nets introduced by Chinese traders, now a symbol of Kochi.",
+                        category: "Other",
+                        history: "Introduced by Chinese traders in the 14th century for fishing.",
+                        significance: "Unique cultural landmark and tourist attraction",
+                        visiting_hours: "24 hours",
+                        entry_fee: "Free to view",
+                        best_time_to_visit: "Sunset",
+                        nearby_attractions: "Fort Kochi,St. Francis Church",
+                        tags: "Fishing,Chinese,Unique",
+                        is_unesco: false,
+                        rating: 4.4,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Chinese Fishing Nets", alt_text: "Chinese Fishing Nets Kochi" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 10,
+                name: "Mysore",
+                state: "Karnataka",
+                latitude: 12.2958,
+                longitude: 76.6394,
+                description: "The cultural capital of Karnataka, Mysore is known for its magnificent palaces, silk, and sandalwood.",
+                population: "920,000",
+                founded: "1399 AD",
+                famous_for: "Mysore Palace,Silk,Sandalwood,Cultural Heritage",
+                tourism_rating: 4.6,
+                is_popular: true,
+                region: "South India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Mysore Palace, Mysore", alt_text: "Mysore Palace Mysore" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Chamundi Hills, Mysore", alt_text: "Chamundi Hills Mysore" },
+                    { image_url: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop", caption: "Brindavan Gardens, Mysore", alt_text: "Brindavan Gardens Mysore" }
+                ],
+                culture: {
+                    festivals: "Dasara,Diwali,Karva Chauth,Christmas",
+                    cuisine: "Mysore Pak,Bisi Bele Bath,Rasam",
+                    art_forms: "Classical Dance,Music,Handicrafts",
+                    music: "Classical Music,Folk Music,Carnatic Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 11,
+                        name: "Mysore Palace",
+                        description: "A magnificent palace that was the official residence of the Wadiyar dynasty.",
+                        category: "Palace",
+                        history: "Built in 1912 by Maharaja Krishnaraja Wadiyar IV.",
+                        significance: "Important royal palace and architectural landmark",
+                        visiting_hours: "10:00 AM - 5:30 PM",
+                        entry_fee: "₹70 for adults",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "Chamundi Hills,Jaganmohan Palace",
+                        tags: "Royal,Palace,Architecture",
+                        is_unesco: false,
+                        rating: 4.8,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Mysore Palace", alt_text: "Mysore Palace Mysore" }
+                        ]
+                    }
+                ]
+            },
+            // EAST INDIA
+            {
+                id: 11,
+                name: "Kolkata",
+                state: "West Bengal",
+                latitude: 22.5726,
+                longitude: 88.3639,
+                description: "The cultural capital of India, Kolkata is known for its intellectual heritage, Durga Puja, and colonial architecture.",
+                population: "4.5 million",
+                founded: "1690 AD",
+                famous_for: "Durga Puja,Howrah Bridge,Victoria Memorial,Intellectual Heritage",
+                tourism_rating: 4.5,
+                is_popular: true,
+                region: "East India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Howrah Bridge, Kolkata", alt_text: "Howrah Bridge Kolkata" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Victoria Memorial, Kolkata", alt_text: "Victoria Memorial Kolkata" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Durga Puja, Kolkata", alt_text: "Durga Puja Kolkata" }
+                ],
+                culture: {
+                    festivals: "Durga Puja,Kali Puja,Diwali,Holi",
+                    cuisine: "Bengali Fish Curry,Rasgulla,Sandesh,Mishti Doi",
+                    art_forms: "Rabindra Sangeet,Classical Dance,Literature",
+                    music: "Rabindra Sangeet,Classical Music,Folk Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 12,
+                        name: "Victoria Memorial",
+                        description: "A magnificent marble building dedicated to Queen Victoria, now a museum.",
+                        category: "Monument",
+                        history: "Built between 1906-1921 to commemorate Queen Victoria's reign.",
+                        significance: "Important colonial architecture and museum",
+                        visiting_hours: "10:00 AM - 5:00 PM",
+                        entry_fee: "₹30 for Indians, ₹500 for foreigners",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "St. Paul's Cathedral,Maidan",
+                        tags: "Colonial,Museum,Architecture",
+                        is_unesco: false,
+                        rating: 4.6,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Victoria Memorial", alt_text: "Victoria Memorial Kolkata" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 12,
+                name: "Bhubaneswar",
+                state: "Odisha",
+                latitude: 20.2961,
+                longitude: 85.8245,
+                description: "The temple city of India, Bhubaneswar is known for its ancient temples and rich cultural heritage.",
+                population: "837,000",
+                founded: "1948 AD",
+                famous_for: "Temples,Classical Dance,Handicrafts,Architecture",
+                tourism_rating: 4.2,
+                is_popular: false,
+                region: "East India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Lingaraj Temple, Bhubaneswar", alt_text: "Lingaraj Temple Bhubaneswar" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Konark Sun Temple, Bhubaneswar", alt_text: "Konark Sun Temple Bhubaneswar" },
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Udayagiri Caves, Bhubaneswar", alt_text: "Udayagiri Caves Bhubaneswar" }
+                ],
+                culture: {
+                    festivals: "Rath Yatra,Durga Puja,Kali Puja,Diwali",
+                    cuisine: "Odisha Thali,Dahibara Aloo Dum,Chhena Poda",
+                    art_forms: "Odissi Dance,Pattachitra,Stone Carving",
+                    music: "Odissi Music,Classical Music,Folk Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 13,
+                        name: "Lingaraj Temple",
+                        description: "An ancient Hindu temple dedicated to Lord Shiva, known for its architectural beauty.",
+                        category: "Temple",
+                        history: "Built in the 11th century by King Jajati Keshari.",
+                        significance: "Important religious and architectural landmark",
+                        visiting_hours: "5:00 AM - 9:00 PM",
+                        entry_fee: "Free",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "Parasurameswar Temple,Raj Rani Temple",
+                        tags: "Hindu,Temple,Ancient",
+                        is_unesco: false,
+                        rating: 4.4,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Lingaraj Temple", alt_text: "Lingaraj Temple Bhubaneswar" }
+                        ]
+                    }
+                ]
+            },
+            // WEST INDIA
+            {
+                id: 13,
+                name: "Ahmedabad",
+                state: "Gujarat",
+                latitude: 23.0225,
+                longitude: 72.5714,
+                description: "The largest city in Gujarat, Ahmedabad is known for its textile industry, Gandhi's Sabarmati Ashram, and vibrant culture.",
+                population: "5.6 million",
+                founded: "1411 AD",
+                famous_for: "Textile Industry,Sabarmati Ashram,Modi Stadium,Gujarati Culture",
+                tourism_rating: 4.4,
+                is_popular: true,
+                region: "West India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Sabarmati Ashram, Ahmedabad", alt_text: "Sabarmati Ashram Ahmedabad" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Jama Masjid, Ahmedabad", alt_text: "Jama Masjid Ahmedabad" },
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Kankaria Lake, Ahmedabad", alt_text: "Kankaria Lake Ahmedabad" }
+                ],
+                culture: {
+                    festivals: "Navratri,Uttarayan,Diwali,Holi",
+                    cuisine: "Gujarati Thali,Dhokla,Khandvi,Fafda",
+                    art_forms: "Textile Art,Wood Carving,Embroidery",
+                    music: "Gujarati Folk Music,Garba"
+                },
+                heritage_sites: [
+                    {
+                        id: 14,
+                        name: "Sabarmati Ashram",
+                        description: "The residence of Mahatma Gandhi, where he lived for 12 years and started the Dandi March.",
+                        category: "Other",
+                        history: "Established by Gandhi in 1917 as his residence and center for freedom struggle.",
+                        significance: "UNESCO World Heritage Site and important historical landmark",
+                        visiting_hours: "8:30 AM - 6:30 PM",
+                        entry_fee: "Free",
+                        best_time_to_visit: "All year round",
+                        nearby_attractions: "Sabarmati Riverfront,Jama Masjid",
+                        tags: "Gandhi,Freedom Struggle,UNESCO",
+                        is_unesco: true,
+                        rating: 4.8,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Sabarmati Ashram", alt_text: "Sabarmati Ashram Ahmedabad" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 14,
+                name: "Pune",
+                state: "Maharashtra",
+                latitude: 18.5204,
+                longitude: 73.8567,
+                description: "The cultural capital of Maharashtra, Pune is known for its educational institutions, IT industry, and rich Maratha heritage.",
+                population: "3.1 million",
+                founded: "8th century AD",
+                famous_for: "Educational Hub,IT Industry,Maratha Heritage,Osho Ashram",
+                tourism_rating: 4.3,
+                is_popular: false,
+                region: "West India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Shaniwar Wada, Pune", alt_text: "Shaniwar Wada Pune" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Aga Khan Palace, Pune", alt_text: "Aga Khan Palace Pune" },
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Sinhagad Fort, Pune", alt_text: "Sinhagad Fort Pune" }
+                ],
+                culture: {
+                    festivals: "Ganesh Chaturthi,Pola,Diwali,Holi",
+                    cuisine: "Misal Pav,Puran Poli,Bhel Puri",
+                    art_forms: "Maratha Architecture,Classical Music",
+                    music: "Classical Music,Folk Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 15,
+                        name: "Shaniwar Wada",
+                        description: "The seat of the Peshwa rulers of the Maratha Empire, known for its architectural beauty.",
+                        category: "Palace",
+                        history: "Built in 1732 by Peshwa Bajirao I as the seat of the Peshwa rulers.",
+                        significance: "Important symbol of Maratha power and architecture",
+                        visiting_hours: "9:00 AM - 5:30 PM",
+                        entry_fee: "₹25 for adults",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "Aga Khan Palace,Lal Mahal",
+                        tags: "Maratha,Palace,Historical",
+                        is_unesco: false,
+                        rating: 4.2,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Shaniwar Wada", alt_text: "Shaniwar Wada Pune" }
+                        ]
+                    }
+                ]
+            },
+            // CENTRAL INDIA
+            {
+                id: 15,
+                name: "Bhopal",
+                state: "Madhya Pradesh",
+                latitude: 23.2599,
+                longitude: 77.4126,
+                description: "The city of lakes, Bhopal is known for its beautiful lakes, historical monuments, and cultural heritage.",
+                population: "1.8 million",
+                founded: "1707 AD",
+                famous_for: "Lakes,Historical Monuments,Cultural Heritage,Education",
+                tourism_rating: 4.0,
+                is_popular: false,
+                region: "Central India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Upper Lake, Bhopal", alt_text: "Upper Lake Bhopal" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Taj-ul-Masajid, Bhopal", alt_text: "Taj-ul-Masajid Bhopal" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Lower Lake, Bhopal", alt_text: "Lower Lake Bhopal" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Eid,Christmas",
+                    cuisine: "Poha,Jalebi,Samosa,Biryani",
+                    art_forms: "Classical Music,Dance,Handicrafts",
+                    music: "Classical Music,Folk Music,Gazal"
+                },
+                heritage_sites: [
+                    {
+                        id: 16,
+                        name: "Taj-ul-Masajid",
+                        description: "One of the largest mosques in India, known for its architectural beauty.",
+                        category: "Mosque",
+                        history: "Built in the 19th century by Nawab Shah Jahan Begum.",
+                        significance: "Important Islamic architecture and religious landmark",
+                        visiting_hours: "6:00 AM - 8:00 PM",
+                        entry_fee: "Free",
+                        best_time_to_visit: "All year round",
+                        nearby_attractions: "Upper Lake,Lower Lake",
+                        tags: "Islamic,Mosque,Architecture",
+                        is_unesco: false,
+                        rating: 4.2,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Taj-ul-Masajid", alt_text: "Taj-ul-Masajid Bhopal" }
+                        ]
+                    }
+                ]
+            },
+            // NORTHEAST INDIA
+            {
+                id: 16,
+                name: "Guwahati",
+                state: "Assam",
+                latitude: 26.1445,
+                longitude: 91.7362,
+                description: "The gateway to Northeast India, Guwahati is known for its tea gardens, wildlife, and cultural diversity.",
+                population: "957,000",
+                founded: "4th century AD",
+                famous_for: "Tea Gardens,Kamakhya Temple,Wildlife,Assamese Culture",
+                tourism_rating: 4.1,
+                is_popular: false,
+                region: "Northeast India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Kamakhya Temple, Guwahati", alt_text: "Kamakhya Temple Guwahati" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Brahmaputra River, Guwahati", alt_text: "Brahmaputra River Guwahati" },
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Umananda Temple, Guwahati", alt_text: "Umananda Temple Guwahati" }
+                ],
+                culture: {
+                    festivals: "Bihu,Durga Puja,Kali Puja,Diwali",
+                    cuisine: "Assamese Thali,Masor Tenga,Pitha",
+                    art_forms: "Bihu Dance,Assamese Music,Handicrafts",
+                    music: "Bihu Music,Classical Music,Folk Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 17,
+                        name: "Kamakhya Temple",
+                        description: "A famous Hindu temple dedicated to Goddess Kamakhya, one of the 51 Shakti Peethas.",
+                        category: "Temple",
+                        history: "Built in the 8th century by King Naranarayan.",
+                        significance: "Important Shakti Peetha and religious landmark",
+                        visiting_hours: "5:30 AM - 10:00 PM",
+                        entry_fee: "Free",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "Umananda Temple,Navagraha Temple",
+                        tags: "Hindu,Temple,Shakti Peetha",
+                        is_unesco: false,
+                        rating: 4.3,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Kamakhya Temple", alt_text: "Kamakhya Temple Guwahati" }
+                        ]
+                    }
+                ]
+            },
+            // HILL STATIONS
+            {
+                id: 17,
+                name: "Shimla",
+                state: "Himachal Pradesh",
+                latitude: 31.1048,
+                longitude: 77.1734,
+                description: "The Queen of Hills, Shimla is a popular hill station known for its colonial architecture and scenic beauty.",
+                population: "169,000",
+                founded: "1819 AD",
+                famous_for: "Hill Station,Colonial Architecture,Scenic Beauty,Climate",
+                tourism_rating: 4.5,
+                is_popular: true,
+                region: "North India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "The Ridge, Shimla", alt_text: "The Ridge Shimla" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Christ Church, Shimla", alt_text: "Christ Church Shimla" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Mall Road, Shimla", alt_text: "Mall Road Shimla" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Dussehra,Christmas",
+                    cuisine: "Himachali Thali,Siddu,Chana Madra",
+                    art_forms: "Classical Music,Dance,Handicrafts",
+                    music: "Classical Music,Folk Music,Gazal"
+                },
+                heritage_sites: [
+                    {
+                        id: 18,
+                        name: "The Ridge",
+                        description: "A large open space in the heart of Shimla, known for its colonial architecture and scenic views.",
+                        category: "Other",
+                        history: "Developed during the British colonial period as a recreational area.",
+                        significance: "Important colonial landmark and tourist attraction",
+                        visiting_hours: "24 hours",
+                        entry_fee: "Free",
+                        best_time_to_visit: "April to October",
+                        nearby_attractions: "Christ Church,Mall Road",
+                        tags: "Colonial,Scenic,Historical",
+                        is_unesco: false,
+                        rating: 4.4,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "The Ridge", alt_text: "The Ridge Shimla" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 18,
+                name: "Srinagar",
+                state: "Jammu and Kashmir",
+                latitude: 34.0837,
+                longitude: 74.7973,
+                description: "The summer capital of Jammu and Kashmir, Srinagar is known for its beautiful Dal Lake and houseboats.",
+                population: "1.2 million",
+                founded: "3rd century BC",
+                famous_for: "Dal Lake,Houseboats,Shikaras,Scenic Beauty",
+                tourism_rating: 4.7,
+                is_popular: true,
+                region: "North India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Dal Lake, Srinagar", alt_text: "Dal Lake Srinagar" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Shalimar Bagh, Srinagar", alt_text: "Shalimar Bagh Srinagar" },
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Nishat Bagh, Srinagar", alt_text: "Nishat Bagh Srinagar" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Eid,Christmas",
+                    cuisine: "Kashmiri Thali,Rogan Josh,Wazwan",
+                    art_forms: "Classical Music,Dance,Handicrafts",
+                    music: "Classical Music,Folk Music,Gazal"
+                },
+                heritage_sites: [
+                    {
+                        id: 19,
+                        name: "Dal Lake",
+                        description: "A beautiful lake known for its houseboats, shikaras, and scenic beauty.",
+                        category: "Other",
+                        history: "Natural lake with historical significance dating back centuries.",
+                        significance: "Important tourist attraction and cultural landmark",
+                        visiting_hours: "24 hours",
+                        entry_fee: "Free to view",
+                        best_time_to_visit: "April to October",
+                        nearby_attractions: "Shalimar Bagh,Nishat Bagh",
+                        tags: "Lake,Scenic,Cultural",
+                        is_unesco: false,
+                        rating: 4.8,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Dal Lake", alt_text: "Dal Lake Srinagar" }
+                        ]
+                    }
+                ]
+            },
+            // ADDITIONAL MAJOR CITIES
+            {
+                id: 19,
+                name: "Amritsar",
+                state: "Punjab",
+                latitude: 31.6340,
+                longitude: 74.8723,
+                description: "The spiritual capital of Sikhism, Amritsar is home to the Golden Temple and rich Punjabi culture.",
+                population: "1.1 million",
+                founded: "1577 AD",
+                famous_for: "Golden Temple,Sikhism,Punjabi Culture,Food",
+                tourism_rating: 4.6,
+                is_popular: true,
+                region: "North India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Golden Temple, Amritsar", alt_text: "Golden Temple Amritsar" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Jallianwala Bagh, Amritsar", alt_text: "Jallianwala Bagh Amritsar" },
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Wagah Border, Amritsar", alt_text: "Wagah Border Amritsar" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Baisakhi,Gurpurab",
+                    cuisine: "Punjabi Thali,Butter Chicken,Naan,Chole Bhature",
+                    art_forms: "Bhangra,Giddha,Handicrafts",
+                    music: "Punjabi Music,Bhangra,Folk Music"
+                },
+                heritage_sites: [
+                    {
+                        id: 20,
+                        name: "Golden Temple",
+                        description: "The holiest shrine of Sikhism, known for its golden dome and spiritual significance.",
+                        category: "Temple",
+                        history: "Built in 1604 by Guru Arjan Dev, the fifth Sikh Guru.",
+                        significance: "Most sacred shrine of Sikhism and spiritual center",
+                        visiting_hours: "24 hours",
+                        entry_fee: "Free",
+                        best_time_to_visit: "All year round",
+                        nearby_attractions: "Jallianwala Bagh,Wagah Border",
+                        tags: "Sikh,Temple,Sacred",
+                        is_unesco: false,
+                        rating: 4.9,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "Golden Temple", alt_text: "Golden Temple Amritsar" }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 20,
+                name: "Udaipur",
+                state: "Rajasthan",
+                latitude: 24.5854,
+                longitude: 73.7125,
+                description: "The City of Lakes, Udaipur is known for its beautiful lakes, palaces, and romantic setting.",
+                population: "451,000",
+                founded: "1559 AD",
+                famous_for: "Lakes,Palaces,Romantic Setting,Royal Heritage",
+                tourism_rating: 4.9,
+                is_popular: true,
+                region: "North India",
+                images: [
+                    { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Lake Palace, Udaipur", alt_text: "Lake Palace Udaipur" },
+                    { image_url: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=800&h=600&fit=crop", caption: "City Palace, Udaipur", alt_text: "City Palace Udaipur" },
+                    { image_url: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800&h=600&fit=crop", caption: "Jag Mandir, Udaipur", alt_text: "Jag Mandir Udaipur" }
+                ],
+                culture: {
+                    festivals: "Diwali,Holi,Gangaur,Tejaji",
+                    cuisine: "Dal Baati Churma,Ghevar,Rajasthani Thali",
+                    art_forms: "Classical Dance,Handicrafts,Music",
+                    music: "Classical Music,Folk Music,Gazal"
+                },
+                heritage_sites: [
+                    {
+                        id: 21,
+                        name: "Lake Palace",
+                        description: "A beautiful palace floating on Lake Pichola, now a luxury hotel.",
+                        category: "Palace",
+                        history: "Built in 1746 by Maharana Jagat Singh II.",
+                        significance: "Famous floating palace and luxury hotel",
+                        visiting_hours: "24 hours (hotel)",
+                        entry_fee: "Free to view from outside",
+                        best_time_to_visit: "October to March",
+                        nearby_attractions: "City Palace,Jag Mandir",
+                        tags: "Rajasthani,Palace,Lake",
+                        is_unesco: false,
+                        rating: 4.8,
+                        images: [
+                            { image_url: "https://images.unsplash.com/photo-1564507592333-c4b4a4c4c4c4?w=800&h=600&fit=crop", caption: "Lake Palace", alt_text: "Lake Palace Udaipur" }
+                        ]
+                    }
+                ]
+            }
+        ];
+        
+        // Global variables
+        let map;
+        let cityMarkers = [];
+        let currentCityData = null;
+        
+        // Initialize map
+        function initMap() {
+            map = L.map('map').setView([20.5937, 78.9629], 5);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            loadCities();
+        }
+        
+        // Load cities and create markers
+        function loadCities() {
+            citiesData.forEach(city => {
+                const marker = L.marker([city.latitude, city.longitude])
+                    .addTo(map)
+                    .bindPopup(`
+                        <div style="text-align: center;">
+                            <h4>${city.name}</h4>
+                            <p>${city.state}</p>
+                            <p><strong>${city.famous_for}</strong></p>
+                            <button onclick="showCityDetails(${city.id})" style="background: #3498db; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                                View Details
+                            </button>
+                        </div>
+                    `);
+                
+                cityMarkers.push({
+                    marker: marker,
+                    city: city
+                });
+            });
+        }
+        
+        // Show city details in side panel
+        function showCityDetails(cityId) {
+            const city = citiesData.find(c => c.id === cityId);
+            if (!city) return;
+            
+            currentCityData = city;
+            const panel = document.getElementById('sidePanel');
+            const content = document.getElementById('panelContent');
+            
+            content.innerHTML = `
+                <div class="city-title">${city.name}</div>
+                <div class="city-subtitle">${city.state} • ${city.region}</div>
+                
+                <div class="image-carousel">
+                    <div class="swiper">
+                        <div class="swiper-wrapper">
+                            ${city.images.map(img => `
+                                <div class="swiper-slide">
+                                    <img src="${img.image_url}" alt="${img.alt_text}" />
+                                    <div style="text-align: center; margin-top: 10px; color: #666; font-size: 14px;">
+                                        ${img.caption}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h4>City Information</h4>
+                    <div class="info-item">
+                        <span class="info-label">Population:</span>
+                        <span class="info-value">${city.population}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Founded:</span>
+                        <span class="info-value">${city.founded}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tourism Rating:</span>
+                        <span class="info-value rating">${city.tourism_rating}/5.0</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Famous For:</span>
+                        <span class="info-value">${city.famous_for}</span>
+                    </div>
+                </div>
+                
+                <div class="info-section">
+                    <h4>Description</h4>
+                    <p style="color: #7f8c8d; line-height: 1.6;">${city.description}</p>
+                </div>
+                
+                <div class="info-section">
+                    <h4>Culture & Heritage</h4>
+                    <div class="culture-grid">
+                        <div class="culture-item">
+                            <h6>Festivals</h6>
+                            <p>${city.culture.festivals}</p>
+                        </div>
+                        <div class="culture-item">
+                            <h6>Cuisine</h6>
+                            <p>${city.culture.cuisine}</p>
+                        </div>
+                        <div class="culture-item">
+                            <h6>Art Forms</h6>
+                            <p>${city.culture.art_forms}</p>
+                        </div>
+                        <div class="culture-item">
+                            <h6>Music</h6>
+                            <p>${city.culture.music}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="heritage-sites">
+                    <h4>Heritage Sites</h4>
+                    ${city.heritage_sites.map(site => `
+                        <div class="heritage-item">
+                            <div class="heritage-title">
+                                ${site.name}
+                                ${site.is_unesco ? '<span class="unesco-badge">UNESCO</span>' : ''}
+                                <span class="rating">${site.rating}/5.0</span>
+                            </div>
+                            <div class="heritage-description">${site.description}</div>
+                            <div style="font-size: 12px; color: #7f8c8d;">
+                                <strong>History:</strong> ${site.history}<br>
+                                <strong>Significance:</strong> ${site.significance}<br>
+                                <strong>Visiting Hours:</strong> ${site.visiting_hours}<br>
+                                <strong>Entry Fee:</strong> ${site.entry_fee}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            // Initialize Swiper
+            new Swiper('.swiper', {
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+            
+            panel.classList.add('open');
+        }
+        
+        // Close side panel
+        function closeSidePanel() {
+            document.getElementById('sidePanel').classList.remove('open');
+        }
+        
+        // Map control functions
+        function showAllCities() {
+            cityMarkers.forEach(item => {
+                item.marker.addTo(map);
+            });
+            map.setView([20.5937, 78.9629], 5);
+        }
+        
+        function showPopularCities() {
+            cityMarkers.forEach(item => {
+                if (item.city.is_popular) {
+                    item.marker.addTo(map);
+                } else {
+                    map.removeLayer(item.marker);
+                }
+            });
+            map.setView([20.5937, 78.9629], 5);
+        }
+        
+        function showUnescoSites() {
+            cityMarkers.forEach(item => {
+                const hasUnesco = item.city.heritage_sites.some(site => site.is_unesco);
+                if (hasUnesco) {
+                    item.marker.addTo(map);
+                } else {
+                    map.removeLayer(item.marker);
+                }
+            });
+            map.setView([20.5937, 78.9629], 5);
+        }
+        
+        function resetMap() {
+            showAllCities();
+        }
+        
+        // Initialize map when page loads
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+</body>
+</html>
